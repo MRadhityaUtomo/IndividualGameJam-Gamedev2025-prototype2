@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://dkgusfly86uji"]
+
+[ext_resource type="PackedScene" uid="uid://b7kl4g8xl8ecu" path="res://enemy_bullet.tscn" id="1_xy5u3"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_ibk72"]
+
+[resource]
+script = ExtResource("2_ibk72")
+card_name = "spinplus"
+bullet_scene = ExtResource("1_xy5u3")
+bullet_speed = 120.0
+bullet_count = 5
+spread_angle = 45.0
+fire_delay = 0.5
+is_burst = false
+mana_cost = 0
+bullet_damage = 5
+start_delay = 0.0
+pattern_type = "SPIN"

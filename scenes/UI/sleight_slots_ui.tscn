@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=3 uid="uid://nsurbe3tvpsc"]
+
+[ext_resource type="Texture2D" uid="uid://b536q4inlrjoa" path="res://myassets/card_base-export.png" id="1_f7y4q"]
+[ext_resource type="Script" path="res://scenes/UI/sleight_slots_ui.gd" id="1_uncew"]
+[ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="3_2opra"]
+
+[node name="SleightSlotsUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uncew")
+
+[node name="Slots" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1327.0
+offset_top = 789.0
+offset_right = 1523.0
+offset_bottom = 880.0
+scale = Vector2(2.79586, 2.7387)
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Slots"]
+layout_mode = 2
+
+[node name="Slot1" type="TextureRect" parent="Slots/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_f7y4q")
+stretch_mode = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Slots"]
+layout_mode = 2
+
+[node name="Slot2" type="TextureRect" parent="Slots/VBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("1_f7y4q")
+stretch_mode = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Slots"]
+layout_mode = 2
+
+[node name="Slot3" type="TextureRect" parent="Slots/VBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("1_f7y4q")
+stretch_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1340.0
+offset_top = 1003.0
+offset_right = 1543.0
+offset_bottom = 1043.0
+theme_override_constants/separation = 200
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2opra")
+text = "[X] EMPTY"
+autowrap_mode = 2
+uppercase = true
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2opra")
+text = "[X] EMPTY"
+autowrap_mode = 2
+uppercase = true
+
+[node name="Label3" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2opra")
+text = "[X] EMPTY"
+autowrap_mode = 2
+uppercase = true

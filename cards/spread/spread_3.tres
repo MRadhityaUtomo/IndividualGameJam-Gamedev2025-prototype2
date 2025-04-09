@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=4 format=3 uid="uid://dn5b2312tynvv"]
+
+[ext_resource type="PackedScene" uid="uid://8t1wt7yc2e30" path="res://scenes/player_bullet.tscn" id="1_3126v"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_5ce3i"]
+[ext_resource type="Texture2D" uid="uid://bm00bf4lnqm1o" path="res://myassets/card_base.png" id="2_a2oof"]
+
+[resource]
+script = ExtResource("2_5ce3i")
+card_name = "spread 3"
+bullet_scene = ExtResource("1_3126v")
+bullet_speed = 400.0
+bullet_count = 3
+spread_angle = 20.0
+card_image = ExtResource("2_a2oof")
+fire_delay = 0.0
+is_burst = false
+mana_cost = 20
+bullet_damage = 15
+start_delay = 0.0
+pattern_type = ""
+lock_tags = Array[String]([])
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0

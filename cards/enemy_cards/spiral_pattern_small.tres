@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://casc140rbr51s"]
+
+[ext_resource type="PackedScene" uid="uid://b7kl4g8xl8ecu" path="res://enemy_bullet.tscn" id="1_8s0pn"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_tt3f3"]
+
+[resource]
+script = ExtResource("2_tt3f3")
+card_name = "spiral IG"
+bullet_scene = ExtResource("1_8s0pn")
+bullet_speed = 150.0
+bullet_count = 20
+spread_angle = 360.0
+fire_delay = 1.0
+is_burst = false
+mana_cost = 0
+bullet_damage = 15
+start_delay = 0.5
+pattern_type = "SPIRAL"
+lock_tags = Array[String]([])
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0

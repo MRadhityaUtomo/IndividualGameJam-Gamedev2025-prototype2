@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://d3mkil55pxo0b"]
+
+[ext_resource type="PackedScene" uid="uid://b7kl4g8xl8ecu" path="res://enemy_bullet.tscn" id="1_q3c1j"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_e8rlu"]
+
+[resource]
+script = ExtResource("2_e8rlu")
+card_name = "wide spread"
+bullet_scene = ExtResource("1_q3c1j")
+bullet_speed = 170.0
+bullet_count = 9
+spread_angle = 100.0
+fire_delay = 5.0
+is_burst = false
+mana_cost = 0
+bullet_damage = 15
+start_delay = 0.0
+pattern_type = "SPREAD"
+lock_tags = Array[String]([])
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0

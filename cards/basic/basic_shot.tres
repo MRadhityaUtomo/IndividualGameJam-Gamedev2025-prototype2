@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=4 format=3 uid="uid://3rmdrieiywuj"]
+
+[ext_resource type="PackedScene" uid="uid://8t1wt7yc2e30" path="res://scenes/player_bullet.tscn" id="1_1evw1"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="1_kh48c"]
+[ext_resource type="Texture2D" uid="uid://bm00bf4lnqm1o" path="res://myassets/card_base.png" id="2_11qbh"]
+
+[resource]
+script = ExtResource("1_kh48c")
+card_name = "basic_bullet"
+bullet_scene = ExtResource("1_1evw1")
+bullet_speed = 400.0
+bullet_count = 1
+spread_angle = 0.0
+card_image = ExtResource("2_11qbh")
+fire_delay = 0.0
+is_burst = false
+mana_cost = 10
+bullet_damage = 5
+pattern_type = ""

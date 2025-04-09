@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://cqq8l7pv50w5o"]
+
+[ext_resource type="PackedScene" uid="uid://ddbxivj70e147" path="res://scenes/enemy_bullet_big.tscn" id="1_d10rg"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_5okff"]
+
+[resource]
+script = ExtResource("2_5okff")
+card_name = "CANNON"
+bullet_scene = ExtResource("1_d10rg")
+bullet_speed = 80.0
+bullet_count = 1
+spread_angle = 0.0
+fire_delay = 1.0
+is_burst = false
+mana_cost = 0
+bullet_damage = 30
+start_delay = 0.2
+pattern_type = "BURST"
+lock_tags = Array[String]([])
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0

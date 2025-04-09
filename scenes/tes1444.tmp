@@ -1,0 +1,191 @@
+[gd_scene load_steps=26 format=3 uid="uid://c13aa21wcmhhd"]
+
+[ext_resource type="PackedScene" uid="uid://c2w466ns4cw4q" path="res://scenes/player.tscn" id="1_sa077"]
+[ext_resource type="Script" path="res://scenes/test_scene.gd" id="1_vu6yx"]
+[ext_resource type="PackedScene" uid="uid://c5wesrx24kb1o" path="res://scenes/UI/card_slot_root.tscn" id="2_wkljl"]
+[ext_resource type="PackedScene" uid="uid://4n8ty1pm02d6" path="res://scenes/boss_enemy.tscn" id="4_6ap1x"]
+[ext_resource type="PackedScene" uid="uid://nsurbe3tvpsc" path="res://scenes/UI/sleight_slots_ui.tscn" id="4_df2qh"]
+[ext_resource type="Texture2D" uid="uid://cy8uwomgl7gu4" path="res://myassets/frame.png" id="5_d7hp1"]
+[ext_resource type="PackedScene" uid="uid://dchocff6jjirn" path="res://scenes/UI/deck_size_ui.tscn" id="5_e3pao"]
+[ext_resource type="Texture2D" uid="uid://cs8ivkgdyvkt2" path="res://myassets/battleframe3.png" id="7_e8qo7"]
+[ext_resource type="PackedScene" uid="uid://df8hlmmgf2h1n" path="res://scenes/UI/player_stats_ui.tscn" id="7_oo5ia"]
+[ext_resource type="Script" path="res://scenes/camera_2d.gd" id="9_7o710"]
+[ext_resource type="Shader" path="res://scenes/crt.gdshader" id="9_gkr4x"]
+[ext_resource type="Shader" path="res://scenes/crt2.gdshader" id="10_xqxyp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgwvb"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(0, 0, 512, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drodf"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(512, 0, 512, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffjfg"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(1024, 0, 512, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scei0"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(1536, 0, 512, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebs0t"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(2048, 0, 512, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_papd6"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(2560, 0, 512, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p58oe"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(3072, 0, 512, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1556a"]
+atlas = ExtResource("7_e8qo7")
+region = Rect2(3584, 0, 512, 254)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tkc4h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rgwvb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drodf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffjfg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scei0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebs0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_papd6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p58oe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1556a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SystemFont" id="SystemFont_3ukcf"]
+font_names = PackedStringArray("Minecraft")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mf38i"]
+shader = ExtResource("9_gkr4x")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jftee"]
+bg_color = Color(0.91664, 0.91664, 0.91664, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idqje"]
+shader = ExtResource("10_xqxyp")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 0.02
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.01
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 2.0
+shader_parameter/roll_size = 10.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.005
+shader_parameter/noise_opacity = 0.05
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.05
+shader_parameter/aberration = 0.00100005
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.5
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.0
+shader_parameter/vignette_opacity = 0.0
+
+[node name="TestScene" type="Node2D"]
+script = ExtResource("1_vu6yx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = -2
+position = Vector2(1003, 374)
+scale = Vector2(10.3695, 10.3695)
+sprite_frames = SubResource("SpriteFrames_tkc4h")
+
+[node name="Player" parent="." instance=ExtResource("1_sa077")]
+position = Vector2(986, 735)
+
+[node name="BossEnemy" parent="." instance=ExtResource("4_6ap1x")]
+position = Vector2(960, 427)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="frame" type="TextureRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.223529)
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("5_d7hp1")
+
+[node name="CardSlotRoot" parent="CanvasLayer" instance=ExtResource("2_wkljl")]
+
+[node name="ManaLabel" type="Label" parent="CanvasLayer"]
+offset_left = 72.0
+offset_top = 64.0
+offset_right = 112.0
+offset_bottom = 87.0
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_3ukcf")
+
+[node name="ManaBar" type="TextureProgressBar" parent="CanvasLayer"]
+visible = false
+offset_top = 17.0
+offset_right = 40.0
+offset_bottom = 57.0
+value = 100.0
+
+[node name="SleightSlotsUI" parent="CanvasLayer" instance=ExtResource("4_df2qh")]
+
+[node name="DeckSizeUI" parent="CanvasLayer" instance=ExtResource("5_e3pao")]
+
+[node name="PlayerStatsUI" parent="CanvasLayer" instance=ExtResource("7_oo5ia")]
+
+[node name="CRTFilter" type="TextureRect" parent="CanvasLayer"]
+visible = false
+material = SubResource("ShaderMaterial_mf38i")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReloadBar" type="ProgressBar" parent="CanvasLayer"]
+offset_left = 335.0
+offset_top = 846.0
+offset_right = 375.0
+offset_bottom = 886.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_jftee")
+max_value = 1.0
+show_percentage = false
+
+[node name="PostProcessing" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="PostProcessing"]
+material = SubResource("ShaderMaterial_idqje")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("9_7o710")

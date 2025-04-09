@@ -1,0 +1,54 @@
+[gd_scene load_steps=15 format=3 uid="uid://c2w466ns4cw4q"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_tfu0t"]
+[ext_resource type="Texture2D" uid="uid://bwpu3lti6id34" path="res://myassets/player1.png" id="2_wpg83"]
+[ext_resource type="PackedScene" uid="uid://dyqhefvco675u" path="res://scenes/card_manager.tscn" id="3_4xqj1"]
+[ext_resource type="PackedScene" uid="uid://dlhf01vck64ud" path="res://scenes/sleight_manager.tscn" id="4_aenj7"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="4_c0lx0"]
+[ext_resource type="Resource" uid="uid://dqrslel7n60ve" path="res://cards/spread/spread_5.tres" id="5_4p2ew"]
+[ext_resource type="Resource" uid="uid://dn5b2312tynvv" path="res://cards/spread/spread_3.tres" id="6_1fr4c"]
+[ext_resource type="Resource" uid="uid://ce52t42uc2xm1" path="res://cards/basic/burst_shot.tres" id="7_tkib0"]
+[ext_resource type="Script" path="res://scripts/sleight_resource.gd" id="8_dopmb"]
+[ext_resource type="Resource" uid="uid://b56y3vhgvog82" path="res://card_sleights/sleight_combo1.tres" id="9_v4jp3"]
+[ext_resource type="Resource" uid="uid://c0p67li3wdqfc" path="res://card_sleights/super_spread_big.tres" id="10_x0olf"]
+[ext_resource type="Resource" uid="uid://dpjogbp0fdvnl" path="res://card_sleights/burst_barrage.tres" id="12_mf8y2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_17y1f"]
+radius = 7.51665
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0a3j"]
+
+[node name="Player" type="Node2D"]
+scale = Vector2(2, 2)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_tfu0t")
+
+[node name="GraceZone" type="Area2D" parent="CharacterBody2D"]
+light_mask = 4
+visibility_layer = 2
+scale = Vector2(0.904688, 0.904688)
+
+[node name="GraceZoneCollision" type="CollisionShape2D" parent="CharacterBody2D/GraceZone"]
+scale = Vector2(2.60111, 2.60111)
+shape = SubResource("CircleShape2D_17y1f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+scale = Vector2(0.458755, 0.458755)
+shape = SubResource("CircleShape2D_e0a3j")
+debug_color = Color(0.973712, 0, 0.432028, 0.42)
+
+[node name="PlayerBulletSpawn" type="Marker2D" parent="CharacterBody2D"]
+position = Vector2(0, -15)
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+z_index = -2
+position = Vector2(9.53674e-07, 9.53674e-07)
+scale = Vector2(0.583333, 0.583333)
+texture = ExtResource("2_wpg83")
+
+[node name="CardManager" parent="." instance=ExtResource("3_4xqj1")]
+deck_data = Array[ExtResource("4_c0lx0")]([ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("7_tkib0")])
+
+[node name="SleightManager" parent="." instance=ExtResource("4_aenj7")]
+sleight_data = Array[ExtResource("8_dopmb")]([ExtResource("9_v4jp3"), ExtResource("10_x0olf"), ExtResource("12_mf8y2")])

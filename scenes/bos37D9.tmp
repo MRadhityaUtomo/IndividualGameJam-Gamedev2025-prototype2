@@ -1,0 +1,37 @@
+[gd_scene load_steps=9 format=3 uid="uid://4n8ty1pm02d6"]
+
+[ext_resource type="PackedScene" uid="uid://dyqhefvco675u" path="res://scenes/card_manager.tscn" id="1_dx02m"]
+[ext_resource type="Script" path="res://scenes/boss_enemy.gd" id="1_fn5vf"]
+[ext_resource type="Texture2D" uid="uid://kr84sxb17wnd" path="res://myassets/player2.png" id="1_mat8w"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_m0dmf"]
+[ext_resource type="Resource" uid="uid://6gpmndg0gaiu" path="res://cards/enemy_cards/fire_flower.tres" id="5_akpte"]
+[ext_resource type="PackedScene" uid="uid://c53x0qer11f6q" path="res://scenes/pattern_manager.tscn" id="7_8kl1x"]
+[ext_resource type="Resource" uid="uid://c12icvrjo5ltc" path="res://cards/enemy_cards/spin.tres" id="7_wgby6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6wnxo"]
+
+[node name="BossEnemy" type="CharacterBody2D"]
+scale = Vector2(2.5, 2.5)
+up_direction = Vector2(0, 1)
+script = ExtResource("1_fn5vf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mat8w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.5, 1.5)
+shape = SubResource("CircleShape2D_6wnxo")
+
+[node name="ShootPoint" type="Marker2D" parent="."]
+position = Vector2(0, -10.3334)
+
+[node name="CardManager" parent="." instance=ExtResource("1_dx02m")]
+deck_data = Array[ExtResource("2_m0dmf")]([ExtResource("7_wgby6"), ExtResource("5_akpte")])
+
+[node name="PatternManager" parent="." instance=ExtResource("7_8kl1x")]
+
+[node name="DamageBarTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="timeout" from="DamageBarTimer" to="." method="_on_damage_bar_timer_timeout"]

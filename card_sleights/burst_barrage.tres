@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SleightRecipe" load_steps=3 format=3 uid="uid://dpjogbp0fdvnl"]
+
+[ext_resource type="PackedScene" uid="uid://8t1wt7yc2e30" path="res://scenes/player_bullet.tscn" id="1_dk7gm"]
+[ext_resource type="Script" path="res://scripts/sleight_resource.gd" id="1_gwrix"]
+
+[resource]
+script = ExtResource("1_gwrix")
+card_names = Array[String](["burst shot", "burst shot", "burst shot"])
+name = "Burs Barrage"
+mana_cost = -1
+bullet_scene = ExtResource("1_dk7gm")
+bullet_speed = 800.0
+bullet_count = 5
+spread_angle = 15.0
+fire_delay = 0.2
+is_burst = false
+bullet_damage = 5

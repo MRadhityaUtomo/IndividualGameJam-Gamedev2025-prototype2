@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://nsurbe3tvpsc"]
+
+[ext_resource type="Texture2D" uid="uid://b536q4inlrjoa" path="res://myassets/card_base-export.png" id="1_f7y4q"]
+[ext_resource type="Script" path="res://scenes/UI/sleight_slots_ui.gd" id="1_uncew"]
+
+[node name="SleightSlotsUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uncew")
+
+[node name="Slots" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 771.0
+offset_top = 496.0
+offset_right = 967.0
+offset_bottom = 567.0
+scale = Vector2(1.85634, 1.85634)
+theme_override_constants/separation = 20
+
+[node name="Slot1" type="TextureRect" parent="Slots"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_f7y4q")
+stretch_mode = 3
+
+[node name="Slot2" type="TextureRect" parent="Slots"]
+layout_mode = 2
+texture = ExtResource("1_f7y4q")
+stretch_mode = 3
+
+[node name="Slot3" type="TextureRect" parent="Slots"]
+layout_mode = 2
+texture = ExtResource("1_f7y4q")
+stretch_mode = 3

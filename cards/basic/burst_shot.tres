@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=4 format=3 uid="uid://ce52t42uc2xm1"]
+
+[ext_resource type="PackedScene" uid="uid://8t1wt7yc2e30" path="res://scenes/player_bullet.tscn" id="1_x84un"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_qkgnm"]
+[ext_resource type="Texture2D" uid="uid://ckkaqgxamfdq5" path="res://myassets/card_base3.png" id="2_sewrx"]
+
+[resource]
+script = ExtResource("2_qkgnm")
+card_name = "burst shot"
+bullet_scene = ExtResource("1_x84un")
+bullet_speed = 500.0
+bullet_count = 8
+spread_angle = 0.0
+card_image = ExtResource("2_sewrx")
+fire_delay = 0.1
+is_burst = true
+mana_cost = 30
+bullet_damage = 5
+start_delay = 0.0
+pattern_type = ""
+lock_tags = Array[String]([])
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0

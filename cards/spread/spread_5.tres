@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=4 format=3 uid="uid://dqrslel7n60ve"]
+
+[ext_resource type="PackedScene" uid="uid://8t1wt7yc2e30" path="res://scenes/player_bullet.tscn" id="1_qo2ds"]
+[ext_resource type="Texture2D" uid="uid://gfn2tx4iyrkh" path="res://myassets/card_base2.png" id="2_5dw0k"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="3_egjud"]
+
+[resource]
+script = ExtResource("3_egjud")
+card_name = "spread 5"
+bullet_scene = ExtResource("1_qo2ds")
+bullet_speed = 400.0
+bullet_count = 5
+spread_angle = 45.0
+card_image = ExtResource("2_5dw0k")
+fire_delay = 0.0
+is_burst = false
+mana_cost = 30
+bullet_damage = 15
+start_delay = 0.0
+pattern_type = ""
+lock_tags = Array[String]([])
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0

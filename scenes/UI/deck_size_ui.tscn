@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://dchocff6jjirn"]
+
+[ext_resource type="Script" path="res://scenes/UI/deck_size_ui.gd" id="1_ij4oi"]
+[ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="2_b8sqh"]
+
+[node name="DeckSizeUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ij4oi")
+
+[node name="Deck" type="Label" parent="."]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 968.0
+offset_right = 122.0
+offset_bottom = 991.0
+scale = Vector2(3.8703, 3.8703)
+theme_override_fonts/font = ExtResource("2_b8sqh")
+uppercase = true
+
+[node name="ReloadWarning" type="Label" parent="."]
+layout_mode = 0
+offset_left = 411.0
+offset_top = 1007.0
+offset_right = 451.0
+offset_bottom = 1030.0
+scale = Vector2(1.7725, 1.7725)
+theme_override_fonts/font = ExtResource("2_b8sqh")
