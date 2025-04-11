@@ -7,11 +7,11 @@
 script = ExtResource("1_dlahc")
 card_names = Array[String](["spread 3", "spread 5", "burst shot"])
 name = "Unnamed Sleight"
-mana_cost = -1
+mana_cost = 80
 bullet_scene = ExtResource("1_xcq6a")
-bullet_speed = 50.0
+bullet_speed = 170.0
 bullet_count = 1
 spread_angle = 0.0
 fire_delay = 0.2
 is_burst = false
-bullet_damage = 150
+bullet_damage = 120

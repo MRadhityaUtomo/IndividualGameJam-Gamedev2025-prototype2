@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://4n8ty1pm02d6"]
+[gd_scene load_steps=25 format=3 uid="uid://4n8ty1pm02d6"]
 
 [ext_resource type="PackedScene" uid="uid://dyqhefvco675u" path="res://scenes/card_manager.tscn" id="1_dx02m"]
 [ext_resource type="Script" path="res://scenes/boss_enemy.gd" id="1_fn5vf"]
@@ -11,8 +11,9 @@
 [ext_resource type="Resource" uid="uid://d3mkil55pxo0b" path="res://cards/enemy_cards/wide_spread.tres" id="6_cidqm"]
 [ext_resource type="Resource" uid="uid://cqq8l7pv50w5o" path="res://cards/enemy_cards/cannon.tres" id="6_xf61v"]
 [ext_resource type="PackedScene" uid="uid://c53x0qer11f6q" path="res://scenes/pattern_manager.tscn" id="7_8kl1x"]
+[ext_resource type="Resource" uid="uid://bvlrhww0eypnk" path="res://cards/enemy_cards/pentagon_spin.tres" id="7_m1y7j"]
 [ext_resource type="Resource" uid="uid://c12icvrjo5ltc" path="res://cards/enemy_cards/spin.tres" id="7_wgby6"]
-[ext_resource type="Resource" uid="uid://casc140rbr51s" path="res://cards/enemy_cards/spiral_pattern_small.tres" id="10_mn5f1"]
+[ext_resource type="AudioStream" uid="uid://c4cg88wq4xbyk" path="res://myassets/audio/Boss hit 1.wav" id="13_qvesf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_njh6m"]
 atlas = ExtResource("2_ry2ol")
@@ -81,10 +82,15 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6wnxo"]
 
-[node name="BossEnemy" type="CharacterBody2D"]
+[node name="BossEnemy" type="StaticBody2D"]
+light_mask = 8
+visibility_layer = 2
 scale = Vector2(2.5, 2.5)
-up_direction = Vector2(0, 1)
 script = ExtResource("1_fn5vf")
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 100.0
+default_color = Color(0.631607, 0.0524005, 0.317752, 1)
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_khdfj")
@@ -97,6 +103,8 @@ autoplay = "default"
 frame_progress = 0.00401794
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 4
+visibility_layer = 2
 position = Vector2(0, 5.2)
 scale = Vector2(2.66841, 1.96441)
 shape = SubResource("CircleShape2D_6wnxo")
@@ -105,7 +113,7 @@ shape = SubResource("CircleShape2D_6wnxo")
 position = Vector2(0, -10.3334)
 
 [node name="CardManager" parent="." instance=ExtResource("1_dx02m")]
-deck_data = Array[ExtResource("2_m0dmf")]([ExtResource("5_ih7x0"), ExtResource("5_ih7x0"), ExtResource("5_ih7x0"), ExtResource("5_akpte"), ExtResource("5_akpte"), ExtResource("5_akpte"), ExtResource("7_wgby6"), ExtResource("7_wgby6"), ExtResource("7_wgby6"), ExtResource("6_xf61v"), ExtResource("6_xf61v"), ExtResource("6_xf61v"), ExtResource("6_xf61v"), ExtResource("6_xf61v"), ExtResource("5_2l21p"), ExtResource("5_2l21p"), ExtResource("5_2l21p"), ExtResource("5_2l21p"), ExtResource("10_mn5f1"), ExtResource("10_mn5f1"), ExtResource("10_mn5f1"), ExtResource("6_cidqm"), ExtResource("6_cidqm"), ExtResource("6_cidqm"), ExtResource("6_cidqm")])
+deck_data = Array[ExtResource("2_m0dmf")]([ExtResource("6_xf61v"), ExtResource("6_xf61v"), ExtResource("6_xf61v"), ExtResource("6_xf61v"), ExtResource("5_akpte"), ExtResource("5_akpte"), ExtResource("5_akpte"), ExtResource("6_cidqm"), ExtResource("6_cidqm"), ExtResource("6_cidqm"), ExtResource("6_cidqm"), ExtResource("7_m1y7j"), ExtResource("7_m1y7j"), ExtResource("7_wgby6"), ExtResource("7_wgby6"), ExtResource("7_wgby6"), ExtResource("5_ih7x0"), ExtResource("5_ih7x0"), ExtResource("5_2l21p"), ExtResource("5_2l21p"), ExtResource("5_2l21p"), ExtResource("5_2l21p")])
 
 [node name="PatternManager" parent="." instance=ExtResource("7_8kl1x")]
 
@@ -114,5 +122,10 @@ deck_data = Array[ExtResource("2_m0dmf")]([ExtResource("5_ih7x0"), ExtResource("
 [node name="DamageBarTimer" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
+
+[node name="TakeHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_qvesf")
+volume_db = 8.0
+pitch_scale = 3.0
 
 [connection signal="timeout" from="DamageBarTimer" to="." method="_on_damage_bar_timer_timeout"]

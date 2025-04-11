@@ -1,0 +1,195 @@
+[gd_scene load_steps=18 format=3 uid="uid://dqq5rarvtn2ax"]
+
+[ext_resource type="Texture2D" uid="uid://iieo8xurielr" path="res://myassets/title.png" id="1_ijq8w"]
+[ext_resource type="PackedScene" uid="uid://cvcs37m2ias6s" path="res://scenes/post_processing.tscn" id="1_mw0ag"]
+[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_xcecy"]
+[ext_resource type="Texture2D" uid="uid://c3nyqgpsyjgn8" path="res://myassets/Static_screen_TV.png" id="2_p2nij"]
+[ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="3_b7h3s"]
+[ext_resource type="PackedScene" uid="uid://byc1ytls06ja6" path="res://scenes/loading_screen.tscn" id="4_0q2gt"]
+[ext_resource type="AudioStream" uid="uid://dx3t2qxq3cla2" path="res://myassets/audio/tape-player-sounds-90780.wav" id="7_v7ayf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cy74i"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(0, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuip2"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(364, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l11j3"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(728, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr8rq"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(1092, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27yq3"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(1456, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5125c"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(1820, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u1olv"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(2184, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llhip"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(2548, 0, 364, 254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mio50"]
+atlas = ExtResource("1_ijq8w")
+region = Rect2(2912, 0, 364, 254)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1r8v0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cy74i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuip2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l11j3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr8rq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27yq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5125c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u1olv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llhip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mio50")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xcecy")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.779291, 0.779291, 0.779291, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_p2nij")
+
+[node name="MainPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.101961, 0.101961, 0.101961, 1)
+
+[node name="Title" type="AnimatedSprite2D" parent="MainPanel"]
+modulate = Color(0.716296, 0.716296, 0.716296, 1)
+position = Vector2(1016, 369)
+scale = Vector2(3.09449, 3.09449)
+sprite_frames = SubResource("SpriteFrames_1r8v0")
+autoplay = "default"
+frame_progress = 0.853065
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -196.0
+offset_top = -160.0
+offset_right = 196.0
+offset_bottom = -136.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(4, 4)
+pivot_offset = Vector2(205, 20)
+theme_override_constants/separation = 46
+
+[node name="Play" type="Button" parent="MainPanel/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_b7h3s")
+text = "PLAY"
+
+[node name="Tutorial" type="Button" parent="MainPanel/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_b7h3s")
+text = "TUTORIAL
+"
+
+[node name="Credits" type="Button" parent="MainPanel/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_b7h3s")
+text = "CREDITS
+"
+
+[node name="Exit" type="Button" parent="MainPanel/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_b7h3s")
+text = "EXIT
+"
+
+[node name="LoadingScreen2" parent="." instance=ExtResource("4_0q2gt")]
+visible = false
+layout_mode = 1
+
+[node name="LoadingScreen" parent="." instance=ExtResource("4_0q2gt")]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+
+[node name="PostProcessing" parent="." instance=ExtResource("1_mw0ag")]
+
+[node name="Switch" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_v7ayf")
+volume_db = 10.0
+pitch_scale = 1.2
+
+[connection signal="pressed" from="MainPanel/HBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MainPanel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]

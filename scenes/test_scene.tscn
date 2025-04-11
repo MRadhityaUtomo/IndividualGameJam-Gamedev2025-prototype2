@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c13aa21wcmhhd"]
+[gd_scene load_steps=42 format=3 uid="uid://c13aa21wcmhhd"]
 
 [ext_resource type="PackedScene" uid="uid://c2w466ns4cw4q" path="res://scenes/player.tscn" id="1_sa077"]
 [ext_resource type="Script" path="res://scenes/test_scene.gd" id="1_vu6yx"]
@@ -12,7 +12,15 @@
 [ext_resource type="PackedScene" uid="uid://df8hlmmgf2h1n" path="res://scenes/UI/player_stats_ui.tscn" id="7_oo5ia"]
 [ext_resource type="Script" path="res://scenes/camera_2d.gd" id="9_7o710"]
 [ext_resource type="Script" path="res://scenes/enemy_hp_bar.gd" id="10_nq81a"]
-[ext_resource type="Shader" path="res://scenes/crt2.gdshader" id="10_xqxyp"]
+[ext_resource type="Script" path="res://scenes/player_hp_bar.gd" id="12_2r3mk"]
+[ext_resource type="PackedScene" uid="uid://cvcs37m2ias6s" path="res://scenes/post_processing.tscn" id="12_dwrm0"]
+[ext_resource type="Texture2D" uid="uid://c3nyqgpsyjgn8" path="res://myassets/Static_screen_TV.png" id="12_pdbst"]
+[ext_resource type="PackedScene" uid="uid://byc1ytls06ja6" path="res://scenes/loading_screen.tscn" id="12_rea6j"]
+[ext_resource type="AudioStream" uid="uid://dx3t2qxq3cla2" path="res://myassets/audio/tape-player-sounds-90780.wav" id="16_4liep"]
+[ext_resource type="AudioStream" uid="uid://be6766o48ygbf" path="res://myassets/audio/stg_st008/unityloop/stg_st008-intro.ogg" id="18_uhn0l"]
+[ext_resource type="AudioStream" uid="uid://dti7itva3ycaf" path="res://myassets/audio/stg_st008/unityloop/stg_st008-loop.ogg" id="19_0e6nm"]
+[ext_resource type="AudioStream" uid="uid://dy82n6fjv6y8r" path="res://myassets/audio/hurt.wav" id="19_lw08v"]
+[ext_resource type="Texture2D" uid="uid://cdhodwn2aax7x" path="res://myassets/warning.png" id="21_nra47"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rgwvb"]
 atlas = ExtResource("7_e8qo7")
@@ -105,50 +113,55 @@ expand_margin_top = 2.0
 expand_margin_right = 5.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_idqje"]
-shader = ExtResource("10_xqxyp")
-shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.02
-shader_parameter/scanlines_width = 0.5
-shader_parameter/grille_opacity = 0.01
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/pixelate = true
-shader_parameter/roll = true
-shader_parameter/roll_speed = 2.0
-shader_parameter/roll_size = 10.0
-shader_parameter/roll_variation = 1.8
-shader_parameter/distort_intensity = 0.005
-shader_parameter/noise_opacity = 0.05
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.05
-shader_parameter/aberration = 0.00500005
-shader_parameter/brightness = 1.4
-shader_parameter/discolor = false
-shader_parameter/warp_amount = 0.5
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.0
-shader_parameter/vignette_opacity = 0.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cj7dj"]
+bg_color = Color(0.151831, 0.153799, 0.130561, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlfkh"]
+bg_color = Color(0.709804, 0.72549, 0.72549, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xom5c"]
+atlas = ExtResource("21_nra47")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5c88"]
+atlas = ExtResource("21_nra47")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e518x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xom5c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5c88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_vu6yx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-visible = false
+modulate = Color(1, 1, 1, 0.235294)
 z_index = -2
-position = Vector2(1003, 374)
-scale = Vector2(10.3695, 10.3695)
+position = Vector2(1003, 434)
+scale = Vector2(6, 10.37)
 sprite_frames = SubResource("SpriteFrames_tkc4h")
 
 [node name="Player" parent="." instance=ExtResource("1_sa077")]
 position = Vector2(1070, 894)
 
 [node name="BossEnemy" parent="." instance=ExtResource("4_6ap1x")]
-position = Vector2(960, 427)
+position = Vector2(960, 318)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="frame" type="TextureRect" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0.223529)
+z_index = -10
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("5_d7hp1")
@@ -156,18 +169,20 @@ texture = ExtResource("5_d7hp1")
 [node name="CardSlotRoot" parent="CanvasLayer" instance=ExtResource("2_wkljl")]
 
 [node name="ManaLabel" type="Label" parent="CanvasLayer"]
-offset_left = 72.0
-offset_top = 64.0
-offset_right = 112.0
-offset_bottom = 87.0
+offset_left = 382.0
+offset_top = 972.0
+offset_right = 452.0
+offset_bottom = 999.0
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("7_1yp7l")
+theme_override_font_sizes/font_size = 26
 
 [node name="ManaBar" type="TextureProgressBar" parent="CanvasLayer"]
 visible = false
-offset_top = 17.0
-offset_right = 40.0
-offset_bottom = 57.0
+offset_left = 372.0
+offset_top = 994.0
+offset_right = 412.0
+offset_bottom = 1034.0
 value = 100.0
 
 [node name="SleightSlotsUI" parent="CanvasLayer" instance=ExtResource("4_df2qh")]
@@ -249,20 +264,78 @@ text = "test"
 [node name="BlinkTimer" type="Timer" parent="CanvasLayer/SpeedTimer"]
 wait_time = 0.5
 
-[node name="PostProcessing" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="PostProcessing"]
-material = SubResource("ShaderMaterial_idqje")
+[node name="ScreenFade" type="TextureRect" parent="CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.5, 1.5)
-pivot_offset = Vector2(960, 540)
+texture = ExtResource("12_pdbst")
+
+[node name="PlayerHpBar" type="ProgressBar" parent="CanvasLayer"]
+offset_left = 83.0
+offset_top = 731.0
+offset_right = 592.0
+offset_bottom = 754.0
+rotation = -1.57079
+pivot_offset = Vector2(2, 14)
+theme_override_styles/background = SubResource("StyleBoxFlat_cj7dj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qlfkh")
+value = 10.0
+show_percentage = false
+script = ExtResource("12_2r3mk")
+
+[node name="LoadingScreen" parent="CanvasLayer" instance=ExtResource("12_rea6j")]
+visible = false
+z_index = 2
+
+[node name="RestartLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 163.0
+offset_right = 120.0
+offset_bottom = 179.0
+grow_horizontal = 2
+pivot_offset = Vector2(120, 8)
+theme_override_fonts/font = ExtResource("7_1yp7l")
+theme_override_font_sizes/font_size = 20
+text = "PRESS [ENTER] TO RESTART"
+
+[node name="PostProcessing" parent="." instance=ExtResource("12_dwrm0")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 script = ExtResource("9_7o710")
+
+[node name="Switch" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_4liep")
+volume_db = 10.0
+pitch_scale = 1.2
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="BGMStart" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(960, 540)
+stream = ExtResource("18_uhn0l")
+volume_db = -2.0
+
+[node name="BGMLoop" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(960, 540)
+stream = ExtResource("19_0e6nm")
+volume_db = -1.0
+
+[node name="FinalHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_lw08v")
+volume_db = 15.0
+pitch_scale = 0.2
+
+[node name="Warning" type="AnimatedSprite2D" parent="."]
+position = Vector2(971, 318)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_e518x")
 
 [connection signal="timeout" from="CanvasLayer/SpeedTimer/BlinkTimer" to="." method="_on_BlinkTimer_timeout"]

@@ -24,9 +24,9 @@ uppercase = true
 
 [node name="ReloadWarning" type="Label" parent="."]
 layout_mode = 0
-offset_left = 411.0
-offset_top = 1007.0
-offset_right = 451.0
-offset_bottom = 1030.0
+offset_left = 382.0
+offset_top = 1012.0
+offset_right = 422.0
+offset_bottom = 1035.0
 scale = Vector2(1.7725, 1.7725)
 theme_override_fonts/font = ExtResource("2_b8sqh")

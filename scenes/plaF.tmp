@@ -1,0 +1,163 @@
+[gd_scene load_steps=30 format=3 uid="uid://c2w466ns4cw4q"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_tfu0t"]
+[ext_resource type="Texture2D" uid="uid://bwpu3lti6id34" path="res://myassets/player1.png" id="2_wpg83"]
+[ext_resource type="PackedScene" uid="uid://dyqhefvco675u" path="res://scenes/card_manager.tscn" id="3_4xqj1"]
+[ext_resource type="Texture2D" uid="uid://d36gkrsqvpbbf" path="res://myassets/muzzleflash3.png" id="4_0vsbm"]
+[ext_resource type="PackedScene" uid="uid://dlhf01vck64ud" path="res://scenes/sleight_manager.tscn" id="4_aenj7"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="4_c0lx0"]
+[ext_resource type="Resource" uid="uid://dqrslel7n60ve" path="res://cards/spread/spread_5.tres" id="5_4p2ew"]
+[ext_resource type="Resource" uid="uid://dn5b2312tynvv" path="res://cards/spread/spread_3.tres" id="6_1fr4c"]
+[ext_resource type="Resource" uid="uid://ce52t42uc2xm1" path="res://cards/basic/burst_shot.tres" id="7_tkib0"]
+[ext_resource type="Script" path="res://scripts/sleight_resource.gd" id="8_dopmb"]
+[ext_resource type="Resource" uid="uid://b56y3vhgvog82" path="res://card_sleights/sleight_combo1.tres" id="9_v4jp3"]
+[ext_resource type="Resource" uid="uid://c0p67li3wdqfc" path="res://card_sleights/super_spread_big.tres" id="10_x0olf"]
+[ext_resource type="Resource" uid="uid://dpjogbp0fdvnl" path="res://card_sleights/burst_barrage.tres" id="12_mf8y2"]
+[ext_resource type="Texture2D" uid="uid://d3s1n37j58vwn" path="res://myassets/thrusters.png" id="13_na5ld"]
+[ext_resource type="Resource" uid="uid://clqguxgn2rott" path="res://card_sleights/spirit_bomb.tres" id="14_lnhea"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_17y1f"]
+radius = 9.98869
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0a3j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f31ds"]
+atlas = ExtResource("13_na5ld")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfust"]
+atlas = ExtResource("13_na5ld")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcqxk"]
+atlas = ExtResource("13_na5ld")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8li2i"]
+atlas = ExtResource("13_na5ld")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dovbr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f31ds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfust")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gcqxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8li2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfust")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl5cy"]
+atlas = ExtResource("4_0vsbm")
+region = Rect2(0, 0, 80, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y34es"]
+atlas = ExtResource("4_0vsbm")
+region = Rect2(80, 0, 80, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhjnn"]
+atlas = ExtResource("4_0vsbm")
+region = Rect2(160, 0, 80, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3emu"]
+atlas = ExtResource("4_0vsbm")
+region = Rect2(240, 0, 80, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i6kc"]
+atlas = ExtResource("4_0vsbm")
+region = Rect2(320, 0, 80, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwugp"]
+atlas = ExtResource("4_0vsbm")
+region = Rect2(400, 0, 80, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tnl38"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_vl5cy")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_y34es")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_nhjnn")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_w3emu")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_4i6kc")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_vwugp")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Player" type="Node2D"]
+scale = Vector2(2, 2)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_tfu0t")
+
+[node name="GraceZone" type="Area2D" parent="CharacterBody2D"]
+light_mask = 4
+visibility_layer = 2
+scale = Vector2(0.904688, 0.904688)
+
+[node name="GraceZoneCollision" type="CollisionShape2D" parent="CharacterBody2D/GraceZone"]
+position = Vector2(0, 1.10535)
+scale = Vector2(2.60111, 2.60111)
+shape = SubResource("CircleShape2D_17y1f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+scale = Vector2(0.458755, 0.458755)
+shape = SubResource("CircleShape2D_e0a3j")
+debug_color = Color(0.973712, 0, 0.432028, 0.42)
+
+[node name="PlayerBulletSpawn" type="Marker2D" parent="CharacterBody2D"]
+position = Vector2(0, -15)
+
+[node name="SpritesNode" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(9.53674e-07, 9.53674e-07)
+scale = Vector2(0.583333, 0.583333)
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D/SpritesNode"]
+z_index = -2
+texture = ExtResource("2_wpg83")
+
+[node name="thrusters" type="AnimatedSprite2D" parent="CharacterBody2D/SpritesNode"]
+position = Vector2(-1.63487e-06, -8.57143)
+scale = Vector2(1.71429, 1.71429)
+sprite_frames = SubResource("SpriteFrames_dovbr")
+autoplay = "default"
+frame_progress = 0.0259865
+
+[node name="muzzleflash" type="AnimatedSprite2D" parent="CharacterBody2D"]
+position = Vector2(5.68434e-14, -14.5)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_tnl38")
+frame = 5
+frame_progress = 1.0
+
+[node name="CardManager" parent="." instance=ExtResource("3_4xqj1")]
+deck_data = Array[ExtResource("4_c0lx0")]([ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c")])
+
+[node name="SleightManager" parent="." instance=ExtResource("4_aenj7")]
+sleight_data = Array[ExtResource("8_dopmb")]([ExtResource("9_v4jp3"), ExtResource("10_x0olf"), ExtResource("12_mf8y2"), ExtResource("14_lnhea")])

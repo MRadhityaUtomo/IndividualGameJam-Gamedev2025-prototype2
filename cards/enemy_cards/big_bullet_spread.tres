@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://yciwiebsdifc"]
+
+[ext_resource type="PackedScene" uid="uid://ddbxivj70e147" path="res://scenes/enemy_bullet_big.tscn" id="1_iu6a6"]
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_acumi"]
+
+[resource]
+script = ExtResource("2_acumi")
+card_name = ""
+bullet_scene = ExtResource("1_iu6a6")
+bullet_speed = 60.0
+bullet_count = 3
+spread_angle = 45.0
+fire_delay = 0.0
+is_burst = false
+mana_cost = 0
+bullet_damage = 0
+start_delay = 0.5
+pattern_type = "SPREAD"
+lock_tags = Array[String]([])
+per_arm_dist = 100.0
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0

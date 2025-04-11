@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends StaticBody2D
 
 @onready var card_manager = $CardManager
 @onready var shoot_point = $ShootPoint
@@ -21,7 +21,10 @@ signal boss_died
 
 @onready var cam = $"../Camera2D"
 
+
+
 func _ready():
+	$"../Warning".visible = false
 	original_modulate = sprite.modulate  
 	health_bar.max_value = max_health
 	health_bar.value = health
@@ -35,9 +38,9 @@ func _physics_process(delta: float) -> void:
 	look_at(player.global_position)
 	rotation_degrees += 92.5
 
-	move_and_slide()
 
 func take_damage(amount: int):
+	$TakeHit.play()
 	show_hit_flash()
 	var prev_health = health
 	
@@ -45,7 +48,7 @@ func take_damage(amount: int):
 	health = clamp(health, 0, max_health)
 	if health < prev_health:
 		damage_timer.start()
-		shake_health_bar() # ⬅️ Add this line
+		shake_health_bar() 
 	
 	health_bar.value = health
 	if health <= 0:
@@ -59,13 +62,6 @@ func shake_health_bar():
 	tween.tween_property(health_bar, "position", health_bar_base_position + Vector2(6, 5), 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(health_bar, "position", health_bar_base_position - Vector2(6, 5), 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(health_bar, "position", health_bar_base_position, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-#func death_shake():
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(health_bar, "position", health_bar_base_position + Vector2(10, 0), 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	#tween.tween_property(health_bar, "position", health_bar_base_position - Vector2(-10, 0), 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	#tween.tween_property(health_bar, "position", health_bar_base_position, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
 
 func die():
 	Engine.time_scale = 0.25

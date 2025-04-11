@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://u2e74ykjrolk"]
+[gd_scene load_steps=7 format=3 uid="uid://u2e74ykjrolk"]
 
 [ext_resource type="Script" path="res://scenes/game_over.gd" id="1_k81x2"]
+[ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="2_51vjv"]
+[ext_resource type="Texture2D" uid="uid://c3nyqgpsyjgn8" path="res://myassets/Static_screen_TV.png" id="2_mm26h"]
+[ext_resource type="PackedScene" uid="uid://cvcs37m2ias6s" path="res://scenes/post_processing.tscn" id="3_j2cvl"]
+[ext_resource type="PackedScene" uid="uid://byc1ytls06ja6" path="res://scenes/loading_screen.tscn" id="3_lel0m"]
+[ext_resource type="AudioStream" uid="uid://dx3t2qxq3cla2" path="res://myassets/audio/tape-player-sounds-90780.wav" id="5_b7aio"]
 
 [node name="GameOver" type="Control"]
 layout_mode = 3
@@ -11,18 +16,79 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_k81x2")
 
-[node name="Button" type="Button" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -15.5
-offset_right = 25.0
-offset_bottom = 15.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Retry
-"
+color = Color(0.779291, 0.779291, 0.779291, 1)
+
+[node name="GameOverPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_mm26h")
+
+[node name="Retry" type="Button" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -45.0
+offset_top = -80.0
+offset_right = 45.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(4, 4)
+pivot_offset = Vector2(45, 12)
+theme_override_fonts/font = ExtResource("2_51vjv")
+text = "RETRY"
+
+[node name="BackToMenu" type="Button" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -790.0
+offset_top = -80.0
+offset_right = -700.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(4, 4)
+pivot_offset = Vector2(45, 12)
+theme_override_fonts/font = ExtResource("2_51vjv")
+text = "MENU"
+
+[node name="LoadingScreen" parent="." instance=ExtResource("3_lel0m")]
+layout_mode = 1
+
+[node name="PostProcessing" parent="." instance=ExtResource("3_j2cvl")]
+physics_interpolation_mode = 1
+layer = 2
+
+[node name="Switch" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_b7aio")
+volume_db = 10.0
+pitch_scale = 1.2
+
+[connection signal="pressed" from="GameOverPanel/Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="GameOverPanel/BackToMenu" to="." method="_on_back_to_menu_pressed"]

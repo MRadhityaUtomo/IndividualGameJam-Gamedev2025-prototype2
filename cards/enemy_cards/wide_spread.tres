@@ -17,6 +17,7 @@ bullet_damage = 15
 start_delay = 0.0
 pattern_type = "SPREAD"
 lock_tags = Array[String]([])
+per_arm_dist = 100.0
 cross_spin_distance = 64.0
 cross_spin_duration = 5.0
 cross_spin_speed = 90.0

@@ -47,6 +47,9 @@ func try_activate_sleight():
 				if cost > player.max_mana:
 					cost = player.max_mana
 				print(cost)
+			else:
+				cost = recipe.mana_cost
+				print("combo cost: " + str(cost))
 
 			if player.mana >= cost:
 				player.mana -= cost

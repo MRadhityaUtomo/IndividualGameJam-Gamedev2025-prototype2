@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://df8hlmmgf2h1n"]
+[gd_scene load_steps=4 format=3 uid="uid://df8hlmmgf2h1n"]
 
 [ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="1_0jify"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63mmm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vjws8"]
+bg_color = Color(0.773866, 0.494755, 0.11081, 1)
 
 [node name="PlayerStatsUI" type="Control"]
 layout_mode = 3
@@ -12,9 +17,49 @@ grow_vertical = 2
 
 [node name="HealthBar" type="Label" parent="."]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 48.0
-offset_right = 168.0
-offset_bottom = 71.0
+offset_left = 118.0
+offset_top = 723.0
+offset_right = 214.0
+offset_bottom = 746.0
 theme_override_fonts/font = ExtResource("1_0jify")
+theme_override_font_sizes/font_size = 32
 text = "HP : 100/100"
+
+[node name="DashUI" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 708.0
+offset_right = 591.0
+offset_bottom = 748.0
+rotation = -1.57079
+theme_override_constants/separation = 4
+
+[node name="dashcharge1" type="ProgressBar" parent="DashUI"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxEmpty_63mmm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vjws8")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="dashcharge2" type="ProgressBar" parent="DashUI"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxEmpty_63mmm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vjws8")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="dashcharge3" type="ProgressBar" parent="DashUI"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxEmpty_63mmm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vjws8")
+max_value = 1.0
+value = 1.0
+show_percentage = false

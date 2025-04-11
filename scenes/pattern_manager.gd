@@ -13,11 +13,12 @@ var is_reloading := false
 var used_cards := 0
 var active_locks: Array[String] = []
 var queued_patterns: Array[CardResource] = []
+var patterns_enabled := false  
 
 
 
 func _process(delta):
-	if is_reloading:
+	if not patterns_enabled or is_reloading:
 		return
 
 	pattern_timer -= delta
@@ -25,23 +26,29 @@ func _process(delta):
 		start_next_pattern()
 		pattern_timer = pattern_interval
 
+func start_patterns():
+	patterns_enabled = true
+
 func start_next_pattern():
+	print(queued_patterns)
+	# Try to run queued pattern first
+	for i in queued_patterns.size():
+		var queued_card = queued_patterns[i]
+		if can_run_pattern(queued_card.lock_tags):
+			queued_patterns.remove_at(i)
+			await run_card_pattern(queued_card)
+			return
+
+	# If no cards in deck and nothing runnable is in the queue, then reload
 	if cards.deck.size() == 0 and not is_reloading:
 		is_reloading = true
 		print("PatternManager: Reloading cards...")
-		await get_tree().create_timer(3.0).timeout
+		await get_tree().create_timer(2.0).timeout
 		cards.reload_deck()
 		is_reloading = false
 		return
 
-	# Try to run queued pattern first if any
-	if queued_patterns.size() > 0:
-		var queued_card = queued_patterns[0]
-		if can_run_pattern(queued_card.lock_tags):
-			queued_patterns.pop_front()
-			await run_card_pattern(queued_card)
-			return
-
+	# Otherwise, draw a new card
 	cards.draw_card()
 	var card = cards.current_card
 	if not card:
@@ -54,14 +61,25 @@ func start_next_pattern():
 
 	await run_card_pattern(card)
 
+
 func run_card_pattern(card: CardResource) -> void:
 	used_cards += 1
 	print("PatternManager: Used %s cards" % used_cards)
 	print("card name: " + card.card_name)
 
-	await get_tree().create_timer(card.start_delay).timeout
-	add_locks(card.lock_tags)
+	#if card.pattern_type == "BURST":
+		#_show_burst_preview(card)
+	
+	if card.pattern_type == "BURST" or card.pattern_type == "CROSS_SPIN":
+		$"../../Warning".visible = true
+		$"../../Warning".play()
 
+	await get_tree().create_timer(card.start_delay).timeout
+
+	#_hide_burst_preview()  
+	add_locks(card.lock_tags)
+	$"../../Warning".visible = false
+	$"../../Warning".stop()
 	match card.pattern_type:
 		"BURST":
 			await fire_burst_pattern(card)
@@ -77,6 +95,8 @@ func run_card_pattern(card: CardResource) -> void:
 			await fire_cross_spin_pattern(card)
 		"SPREAD":
 			await fire_spread_pattern(card)
+		#"CONVERGE":
+			#await fire_converge_circle_pattern(card)
 		_:
 			print("PatternManager: Unknown pattern type -", card.pattern_type)
 
@@ -108,6 +128,51 @@ func fire_burst_pattern(card):
 		bullet.damage = card.bullet_damage
 		get_tree().current_scene.add_child(bullet)
 
+func _show_burst_preview(card):
+	var line = shoot_point.get_node("PreFireLine")
+	if not line:
+		return
+	line.visible = true
+	var direction = (Boss.player.global_position - shoot_point.global_position).normalized()
+	var length = 1000  
+	line.points = [Vector2.ZERO, direction * length]
+
+func _hide_burst_preview():
+	var line = shoot_point.get_node("PreFireLine")
+	if line:
+		line.visible = false
+		
+## STILL BROKEN ATTACK
+#func fire_converge_circle_pattern(card):
+	#var player = Boss.player
+	#if player == null:
+		#return
+#
+	#var target_position = player.global_position
+	#var bullet_count = card.bullet_count
+	#var radius = card.orbit_radius  # how far around the player the bullets spawn
+	#var converge_delay = card.convergence_delay
+#
+	#for i in range(bullet_count):
+		#var angle = TAU * i / bullet_count
+		#var spawn_pos = target_position + Vector2.RIGHT.rotated(angle) * radius
+#
+		#var bullet = card.bullet_scene.instantiate()
+		#bullet.boss = Boss
+		#bullet.damage = card.bullet_damage
+		#bullet.speed = 0  # start stationary
+		#bullet.global_position = spawn_pos
+		#bullet.target_position = target_position  # we'll use this in the bullet script
+		#bullet.converging = true  # custom flag to trigger convergence later
+		#get_tree().current_scene.add_child(bullet)
+#
+	#await get_tree().create_timer(converge_delay).timeout
+#
+	#for bullet in get_tree().get_nodes_in_group("enemy_bullet"):
+		#if bullet.converging and bullet.has_method("start_converge"):
+			#bullet.start_converge()
+
+
 func fire_spread_pattern(card):
 	var bullet_count = card.bullet_count
 	var spread_angle = card.spread_angle
@@ -127,63 +192,57 @@ func fire_spread_pattern(card):
 		get_tree().current_scene.add_child(bullet)
 
 
-func fire_cross_spin_pattern(card):
-	var group = Node2D.new()
+
+func fire_cross_spin_pattern(card: CardResource) -> void:
+	var group: Node2D = Node2D.new()
 	group.global_position = centerspawn.global_position
-	group.scale = Vector2.ZERO  # Start hidden
+	group.scale = Vector2.ZERO
 	get_tree().current_scene.add_child(group)
 
-	var directions = [
-		Vector2(1, 0),
-		Vector2(-1, 0),
-		Vector2(0, 1),
-		Vector2(0, -1)
-	]
+	var arm_count: int = max(1, card.bullet_count)  
+	var bullets_per_arm: int = 24
+	var spacing: float = card.per_arm_dist  
+	var angle_step: float = TAU / float(arm_count)  
 
-	var bullets_per_arm = 24
-	var spacing = 100
-
-	for dir in directions:
-		for i in range(1, bullets_per_arm + 1):
-			var bullet = card.bullet_scene.instantiate()
+	for arm_index: int in arm_count:
+		var direction: Vector2 = Vector2.RIGHT.rotated(angle_step * arm_index)
+		for i: int in range(1, bullets_per_arm + 1):
+			var bullet: Node2D = card.bullet_scene.instantiate()
 			bullet.boss = Boss
 			bullet.isCross = true
-			bullet.position = dir * spacing * i
+			bullet.position = direction * spacing * i
 			bullet.speed = 0
 			bullet.damage = card.bullet_damage
 			group.add_child(bullet)
 
-	# Pop-in tween (then spin after)
-	var intro_tween = create_tween()
+	var intro_tween: Tween = create_tween()
 	intro_tween.tween_property(group, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
 	await intro_tween.finished
 
+	await get_tree().create_timer(card.start_delay).timeout
 
-	await get_tree().create_timer(0.3).timeout  # 👈 Extra pause before rotation starts
-
-	# Spin begins
-	var duration := 10.0
-	var spin_rate := 45.0
-	var elapsed := 0.0
+	var duration: float = card.cross_spin_duration
+	var spin_rate: float = card.cross_spin_speed
+	var elapsed: float = 0.0
 
 	while elapsed < duration:
 		if not is_inside_tree():
 			break
 		await get_tree().process_frame
-		var delta = get_process_delta_time()
-		if delta == 0:
-			break  # failsafe
+		var delta: float = get_process_delta_time()
+		if delta == 0.0:
+			break
 		group.rotation += deg_to_rad(spin_rate * delta)
 		elapsed += delta
 
-	# Exit animation
-	var exit_tween = create_tween()
+	var exit_tween: Tween = create_tween()
 	exit_tween.tween_property(group, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
 	exit_tween.tween_property(group, "modulate:a", 0.0, 0.2)
 	await exit_tween.finished
 
-
 	group.queue_free()
+
+
 
 
 
@@ -236,7 +295,6 @@ func fire_alternate_ring_pattern(card):
 			bullet.damage = card.bullet_damage
 			get_tree().current_scene.add_child(bullet)
 
-		# Alternate offset each wave
 		offset = angle_step / 2.0 if offset == 0.0 else 0.0
 		await get_tree().create_timer(card.fire_delay).timeout
 
@@ -244,7 +302,7 @@ func fire_flower_pattern(card):
 	var waves: int = 15
 	var count: int = card.bullet_count
 	var angle_step: float = 360.0 / float(count)
-	var rotation_offset: float = 0.0  # this will spiral the waves
+	var rotation_offset: float = 0.0 
 
 	for wave in range(waves):
 		for i in range(count):
@@ -257,15 +315,14 @@ func fire_flower_pattern(card):
 			bullet.damage = card.bullet_damage
 			get_tree().current_scene.add_child(bullet)
 
-		# Spiral effect: gradually rotate the whole ring each wave
-		rotation_offset += angle_step / 3.0  # tweak for petal tightness
+		rotation_offset += angle_step / 3.0  
 		await get_tree().create_timer(card.fire_delay).timeout
 	
 
 func fire_spin_pattern(card):
 	var normal_speed = Boss.speed
 	Boss.speed = 0 
-	var duration := 6.0  # total time to keep spinning and firing
+	var duration := 6.0 
 	var elapsed := 0.0
 	var spin_angle := 0.0
 
@@ -283,7 +340,7 @@ func fire_spin_pattern(card):
 			bullet.speed = card.bullet_speed
 			bullet.damage = card.bullet_damage
 
-		spin_angle += 15  # degrees per burst
+		spin_angle += 15  
 		await get_tree().create_timer(card.fire_delay).timeout
 		elapsed += card.fire_delay
 	Boss.speed = normal_speed

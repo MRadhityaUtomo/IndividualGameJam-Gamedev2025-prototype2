@@ -14,11 +14,16 @@ class_name CardResource
 @export var start_delay: float = 0.0
 
 # Pattern type (used by PatternManager)
-@export_enum("SPREAD", "BURST", "SPIRAL", "FAN", "RING", "SPIN", "ALTERNATE_RING", "FLOWER", "CROSS_SPIN")
+@export_enum("SPREAD", "BURST", "SPIRAL", "FAN", "RING", "SPIN", "ALTERNATE_RING", "FLOWER", "CROSS_SPIN","CONVERGE")
 var pattern_type: String
 
 @export var lock_tags: Array[String] = []
-# Optional: New parameters for Cross Spin
-@export var cross_spin_distance: float = 64.0  # distance of bullets from center
-@export var cross_spin_duration: float = 5.0   # how long the group rotates
-@export var cross_spin_speed: float = 90.0     # degrees per second
+# Optional parameters for Cross Spin Pattern
+@export var per_arm_dist: float = 100.0
+@export var cross_spin_distance: float = 64.0  
+@export var cross_spin_duration: float = 5.0  
+@export var cross_spin_speed: float = 90.0     
+
+# For Lock In pattern
+@export var convergence_delay: float  # e.g., 1.5
+@export var converge_radius: float  # e.g., 1.5

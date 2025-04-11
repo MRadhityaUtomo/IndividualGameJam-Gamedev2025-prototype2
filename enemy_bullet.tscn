@@ -9,7 +9,7 @@
 light_mask = 3
 visibility_layer = 4
 z_index = -1
-scale = Vector2(1.6, 1.6)
+scale = Vector2(2, 2)
 script = ExtResource("1_nc4q8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

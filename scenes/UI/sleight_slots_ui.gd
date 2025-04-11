@@ -15,6 +15,14 @@ extends Control
 
 var idle_sway_tweens = {}
 
+func cleanup_all_tweens():
+	for i in idle_sway_tweens.keys():
+		if idle_sway_tweens[i] and is_instance_valid(idle_sway_tweens[i]):
+			idle_sway_tweens[i].kill()
+	idle_sway_tweens.clear()
+
+func _exit_tree():
+	cleanup_all_tweens()
 
 func _ready():
 	var sleight_manager = player.get_sleight_manager()
