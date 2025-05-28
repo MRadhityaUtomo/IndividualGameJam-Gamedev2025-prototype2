@@ -1,26 +1,30 @@
-[gd_scene load_steps=41 format=3 uid="uid://c2w466ns4cw4q"]
+[gd_scene load_steps=53 format=3 uid="uid://c2w466ns4cw4q"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_tfu0t"]
+[ext_resource type="Script" uid="uid://bb1lcug4lwkfm" path="res://player.gd" id="1_tfu0t"]
 [ext_resource type="Texture2D" uid="uid://bwpu3lti6id34" path="res://myassets/player1.png" id="2_wpg83"]
 [ext_resource type="PackedScene" uid="uid://dyqhefvco675u" path="res://scenes/card_manager.tscn" id="3_4xqj1"]
 [ext_resource type="Texture2D" uid="uid://d36gkrsqvpbbf" path="res://myassets/muzzleflash3.png" id="4_0vsbm"]
 [ext_resource type="PackedScene" uid="uid://dlhf01vck64ud" path="res://scenes/sleight_manager.tscn" id="4_aenj7"]
-[ext_resource type="Script" path="res://scripts/card_resource.gd" id="4_c0lx0"]
+[ext_resource type="Script" uid="uid://ba1wxnqstl0pf" path="res://scripts/card_resource.gd" id="4_c0lx0"]
 [ext_resource type="Resource" uid="uid://dqrslel7n60ve" path="res://cards/spread/spread_5.tres" id="5_4p2ew"]
 [ext_resource type="AudioStream" uid="uid://vxjws7wxbglk" path="res://myassets/audio/Cassette Preview/AUDIO/CASSETTE_RATTLE_12.wav" id="5_32m4b"]
 [ext_resource type="Resource" uid="uid://dn5b2312tynvv" path="res://cards/spread/spread_3.tres" id="6_1fr4c"]
 [ext_resource type="AudioStream" uid="uid://bi68f7ffrr42v" path="res://myassets/audio/Cassette Preview/AUDIO/BUTTON_03.wav" id="6_dkeif"]
 [ext_resource type="Resource" uid="uid://ce52t42uc2xm1" path="res://cards/basic/burst_shot.tres" id="7_tkib0"]
 [ext_resource type="AudioStream" uid="uid://lx2yv8nda8si" path="res://myassets/audio/Cassette Preview/AUDIO/OPEN_CASE_02.wav" id="7_urmhj"]
-[ext_resource type="Script" path="res://scripts/sleight_resource.gd" id="8_dopmb"]
+[ext_resource type="Script" uid="uid://wfnyjbvqkw6y" path="res://scripts/sleight_resource.gd" id="8_dopmb"]
 [ext_resource type="AudioStream" uid="uid://dy82n6fjv6y8r" path="res://myassets/audio/hurt.wav" id="8_rrsbe"]
 [ext_resource type="Texture2D" uid="uid://bwcivhddrvmm" path="res://myassets/grazeactivated.png" id="9_p0me7"]
 [ext_resource type="Resource" uid="uid://b56y3vhgvog82" path="res://card_sleights/sleight_combo1.tres" id="9_v4jp3"]
 [ext_resource type="AudioStream" uid="uid://dh3u6o3sa2bv7" path="res://myassets/audio/03_crate_open_2.wav" id="10_1yfyr"]
 [ext_resource type="Resource" uid="uid://c0p67li3wdqfc" path="res://card_sleights/super_spread_big.tres" id="10_x0olf"]
+[ext_resource type="AudioStream" uid="uid://cs4tcxk75qh8x" path="res://myassets/audio/keyboard-spacebar-hit-101812.mp3" id="11_wtwd8"]
+[ext_resource type="AudioStream" uid="uid://4gcb6nt8usu7" path="res://myassets/audio/e_s013.ogg" id="12_1wl2e"]
 [ext_resource type="Resource" uid="uid://dpjogbp0fdvnl" path="res://card_sleights/burst_barrage.tres" id="12_mf8y2"]
 [ext_resource type="Texture2D" uid="uid://d3s1n37j58vwn" path="res://myassets/thrusters.png" id="13_na5ld"]
+[ext_resource type="AudioStream" uid="uid://cqx3ahk05f0k" path="res://myassets/audio/e_s011.ogg" id="13_q4f1g"]
 [ext_resource type="Resource" uid="uid://clqguxgn2rott" path="res://card_sleights/spirit_bomb.tres" id="14_lnhea"]
+[ext_resource type="Texture2D" uid="uid://bgwk3qgmf3rlh" path="res://myassets/explosion.png" id="25_ke2ow"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_17y1f"]
 radius = 9.98869
@@ -152,6 +156,63 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_31cv2"]
+atlas = ExtResource("25_ke2ow")
+region = Rect2(960, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf23h"]
+atlas = ExtResource("25_ke2ow")
+region = Rect2(1024, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt7fs"]
+atlas = ExtResource("25_ke2ow")
+region = Rect2(1088, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqfne"]
+atlas = ExtResource("25_ke2ow")
+region = Rect2(1152, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnwbv"]
+atlas = ExtResource("25_ke2ow")
+region = Rect2(1216, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl8cc"]
+atlas = ExtResource("25_ke2ow")
+region = Rect2(1280, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_487ah"]
+atlas = ExtResource("25_ke2ow")
+region = Rect2(1344, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_md1ol"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31cv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf23h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt7fs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqfne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnwbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl8cc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_487ah")
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}]
+
 [node name="Player" type="Node2D"]
 light_mask = 4
 scale = Vector2(2, 2)
@@ -162,7 +223,7 @@ script = ExtResource("1_tfu0t")
 
 [node name="GraceZone" type="Area2D" parent="CharacterBody2D"]
 light_mask = 4
-scale = Vector2(0.904688, 0.904688)
+scale = Vector2(1.04846, 1.04846)
 
 [node name="GraceZoneCollision" type="CollisionShape2D" parent="CharacterBody2D/GraceZone"]
 light_mask = 4
@@ -170,9 +231,13 @@ position = Vector2(0, 1.10535)
 scale = Vector2(2.60111, 2.60111)
 shape = SubResource("CircleShape2D_17y1f")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="HurtArea" type="Area2D" parent="CharacterBody2D"]
 light_mask = 4
-scale = Vector2(0.458755, 0.458755)
+position = Vector2(0, 0.5)
+scale = Vector2(0.43575, 0.43575)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/HurtArea"]
+light_mask = 4
 shape = SubResource("CircleShape2D_e0a3j")
 debug_color = Color(0.973712, 0, 0.432028, 0.42)
 
@@ -223,12 +288,42 @@ volume_db = 5.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 light_mask = 524288
 visibility_layer = 524288
+position = Vector2(0, 1.5)
+scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_pelr8")
 
 [node name="dashfx" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 stream = ExtResource("10_1yfyr")
 volume_db = 12.0
 pitch_scale = 2.0
+
+[node name="grazed" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("11_wtwd8")
+volume_db = -10.0
+pitch_scale = 4.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+light_mask = 4
+scale = Vector2(0.210456, 0.210456)
+shape = SubResource("CircleShape2D_e0a3j")
+disabled = true
+debug_color = Color(0.973712, 0, 0.432028, 0.42)
+
+[node name="Sleightsuccess" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("12_1wl2e")
+volume_db = 4.0
+pitch_scale = 1.4
+
+[node name="Sleightfailed" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("13_q4f1g")
+volume_db = 10.0
+
+[node name="SleightIndicator" type="AnimatedSprite2D" parent="CharacterBody2D"]
+position = Vector2(-4, -4)
+scale = Vector2(1.4, 1.4)
+sprite_frames = SubResource("SpriteFrames_md1ol")
+frame = 6
+frame_progress = 1.0
 
 [node name="CardManager" parent="." instance=ExtResource("3_4xqj1")]
 deck_data = Array[ExtResource("4_c0lx0")]([ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("5_4p2ew"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("7_tkib0"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c"), ExtResource("6_1fr4c")])

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SleightRecipe" load_steps=3 format=3 uid="uid://c0p67li3wdqfc"]
 
 [ext_resource type="PackedScene" uid="uid://8t1wt7yc2e30" path="res://scenes/player_bullet.tscn" id="1_bnetg"]
-[ext_resource type="Script" path="res://scripts/sleight_resource.gd" id="2_r3pv0"]
+[ext_resource type="Script" uid="uid://wfnyjbvqkw6y" path="res://scripts/sleight_resource.gd" id="2_r3pv0"]
 
 [resource]
 script = ExtResource("2_r3pv0")
@@ -10,8 +10,8 @@ name = "Unnamed Sleight"
 mana_cost = 60
 bullet_scene = ExtResource("1_bnetg")
 bullet_speed = 600.0
-bullet_count = 12
+bullet_count = 8
 spread_angle = 45.0
 fire_delay = 0.05
 is_burst = false
-bullet_damage = 4
+bullet_damage = 3

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://dch8uoean48h0"]
+
+[ext_resource type="PackedScene" uid="uid://b7kl4g8xl8ecu" path="res://enemy_bullet.tscn" id="1_jw736"]
+[ext_resource type="Script" uid="uid://ba1wxnqstl0pf" path="res://scripts/card_resource.gd" id="2_8aurw"]
+
+[resource]
+script = ExtResource("2_8aurw")
+card_name = "dashnburst"
+bullet_scene = ExtResource("1_jw736")
+bullet_speed = 200.0
+bullet_count = 20
+spread_angle = 360.0
+fire_delay = 1.5
+is_burst = false
+mana_cost = 0
+bullet_damage = 15
+start_delay = 1.2
+pattern_type = "DASHBURST"
+lock_tags = Array[String](["heavy", "light"])
+per_arm_dist = 100.0
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0
+convergence_delay = 0.0
+converge_radius = 0.0

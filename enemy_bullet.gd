@@ -43,6 +43,11 @@ func _on_body_entered(body):
 			body.take_damage(damage)
 			queue_free()
 
+func _on_area_entered(area):
+	if area.is_in_group("player_hurtbox"):
+		if area.get_parent().has_method("take_damage") and !area.get_parent().is_invincible:
+			area.get_parent().take_damage(damage)
+			queue_free()
 
 func _process(delta: float) -> void:
 	if (boss == null or !is_instance_valid(boss)):

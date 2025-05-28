@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dchocff6jjirn"]
 
-[ext_resource type="Script" path="res://scenes/UI/deck_size_ui.gd" id="1_ij4oi"]
+[ext_resource type="Script" uid="uid://thf040i88yw3" path="res://scenes/UI/deck_size_ui.gd" id="1_ij4oi"]
 [ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="2_b8sqh"]
 
 [node name="DeckSizeUI" type="Control"]

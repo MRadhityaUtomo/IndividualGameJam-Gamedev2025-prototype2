@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://0y557biyv42o"]
 
 [ext_resource type="PackedScene" uid="uid://b7kl4g8xl8ecu" path="res://enemy_bullet.tscn" id="1_k2f3n"]
-[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_5pgrm"]
+[ext_resource type="Script" uid="uid://ba1wxnqstl0pf" path="res://scripts/card_resource.gd" id="2_5pgrm"]
 
 [resource]
 script = ExtResource("2_5pgrm")
@@ -13,7 +13,7 @@ spread_angle = 0.0
 fire_delay = 0.0
 is_burst = false
 mana_cost = 0
-bullet_damage = 10
+bullet_damage = 15
 start_delay = 0.5
 pattern_type = "CROSS_SPIN"
 lock_tags = Array[String](["heavy"])

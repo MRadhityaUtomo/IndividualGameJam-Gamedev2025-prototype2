@@ -8,11 +8,7 @@ signal sleight_used(buffer: Array)
 var card_buffer: Array = []
 @export var sleight_data: Array[SleightRecipe]
 
-var player = null
-
-func _ready():
-	player = $"../CharacterBody2D"# assuming this is a child of the Player node
-
+@onready var player = $"../CharacterBody2D"
 
 func add_card_to_buffer(card):
 	if card_buffer.size() < 3:
@@ -20,11 +16,10 @@ func add_card_to_buffer(card):
 		print("Card added to buffer: ", card.card_name)
 		emit_signal("sleight_updated", card_buffer)
 	else:
-		print("❌ Sleight buffer full!")
+		return
 
 func try_activate_sleight():
 	if card_buffer.size() < 3:
-		print("❌ Not enough cards for a sleight!")
 		return
 
 	var combo = card_buffer.map(func(c): return c.card_name)
@@ -53,17 +48,15 @@ func try_activate_sleight():
 
 			if player.mana >= cost:
 				player.mana -= cost
-				print("✅ Sleight triggered: ", recipe.name)
-
 				emit_signal("sleight_triggered", combo)
 				card_buffer.clear()
 				emit_signal("sleight_updated", card_buffer)
 				emit_signal("sleight_used", card_buffer)
-			else:
-				print("❌ Not enough mana!")
+				$"../CharacterBody2D/Sleightsuccess".play()
+				$"../CharacterBody2D/SleightIndicator".play()
 			return
-	
-	print("❌ No matching sleight!")
+	print("here")
+	$"../CharacterBody2D/Sleightfailed".play()
 	card_buffer.clear()
 	player.canshoot = true
 	emit_signal("sleight_updated", card_buffer)

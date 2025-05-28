@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c53x0qer11f6q"]
 
-[ext_resource type="Script" path="res://scenes/pattern_manager.gd" id="1_lvfnq"]
+[ext_resource type="Script" uid="uid://cccvgfwfjoloh" path="res://scenes/pattern_manager.gd" id="1_lvfnq"]
 
 [node name="PatternManager" type="Node2D"]
 script = ExtResource("1_lvfnq")

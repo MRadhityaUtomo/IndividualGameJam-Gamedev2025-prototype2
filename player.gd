@@ -1,11 +1,11 @@
 extends CharacterBody2D
 
-@export var speed: float = 280.0
+@export var speed: float = 310.0
 @export var dash_speed: float = 1000.0
 @export var dash_duration: float = 0.1
 @export var max_dash_charges: int = 3
-@export var dash_cooldown: float = 1.2
-@export var maxhealth: int = 110
+@export var dash_cooldown: float = 1.3
+@export var maxhealth: int = 100
 @export var health: int = maxhealth
 
 @onready var player = $".." #Marker2D
@@ -14,7 +14,7 @@ extends CharacterBody2D
 @onready var healthbar = $"../../CanvasLayer/PlayerHpBar"
 @onready var sleight_manager = $"../SleightManager"
 @onready var graze_zone = $GraceZone
-@onready var hitbox = $CollisionShape2D
+@onready var hitbox = $HurtArea/CollisionShape2D
 @onready var reload_bar = $"../../CanvasLayer/ReloadBar"
 @onready var healthLabel = $"../../CanvasLayer/PlayerStatsUI/HealthBar"
 @onready var dash_bars := [
@@ -32,7 +32,7 @@ var dash_time: float = 0.0
 var dash_charges: int = max_dash_charges
 var dash_cooldown_timer: float = 0.0
 var grazing_bullets: int = 0
-var graze_mana_rate: float = 35.0  
+var graze_mana_rate: float = 50.0  
 var is_invincible: bool = false
 
 var is_reloading: bool = false
@@ -44,7 +44,7 @@ var graze_cooldown: float = 0.0
 var graze_timer := 0.0
 var is_grazed := false
 
-const normal_mana_regen = 5.0
+const normal_mana_regen = 10.0
 var mana: float = 100.0
 var max_mana: float = 100.0
 var mana_regen_rate: float = normal_mana_regen  
@@ -63,12 +63,10 @@ func get_card_manager():
 	return card_system
 
 func _physics_process(delta: float) -> void:
-	# Get the visible screen rect
 	var screen_rect = get_viewport_rect()
-
-	# Clamp the player’s global position within screen bounds
-	global_position.x = clamp(global_position.x, screen_rect.position.x, screen_rect.position.x + screen_rect.size.x)
-	global_position.y = clamp(global_position.y, screen_rect.position.y, screen_rect.position.y + screen_rect.size.y)
+	var margin = 50
+	global_position.x = clamp(global_position.x, screen_rect.position.x + margin, screen_rect.position.x + screen_rect.size.x - margin)
+	global_position.y = clamp(global_position.y, screen_rect.position.y + margin, screen_rect.position.y + screen_rect.size.y - margin)
 
 	look_at(get_global_mouse_position())
 	rotation_degrees += 92.5
@@ -104,7 +102,7 @@ func _physics_process(delta: float) -> void:
 		dash_time -= delta
 		if dash_time <= 0:
 			is_dashing = false
-			await get_tree().create_timer(0.12).timeout
+			await get_tree().create_timer(0.2).timeout
 			hitbox.disabled = false
 			update_dash_ui() 
 	else:
@@ -122,6 +120,9 @@ func _on_shootspeed_timeout() -> void:
 	canshoot = true
 
 func _process(delta):
+	#$GraceZone/GraceZoneCollision.disabled = true
+	$CollisionShape2D.disabled = true
+	
 	update_dash_ui() 
 	if is_reloading:
 		reload_timer += delta
@@ -143,6 +144,7 @@ func _process(delta):
 	
 	if grazing_bullets > 0:
 		is_grazed = true
+		#$grazed.play()
 		if !$AnimatedSprite2D.visible:
 			$AnimatedSprite2D.visible = true
 			$AnimatedSprite2D.modulate.a = 0.0
@@ -156,6 +158,7 @@ func _process(delta):
 		mana += graze_mana_rate * delta
 		mana = clamp(mana, 0, max_mana)
 	else:
+		#$grazed.stop()
 		is_grazed = false
 		if $AnimatedSprite2D.visible:
 			if fade_tween:
@@ -168,6 +171,10 @@ func _process(delta):
 		
 		
 	if Input.is_action_just_pressed("shoot") and canshoot:
+		if card_system.current_card == null:
+			$ReloadAudio.play()
+			start_reload()
+			return
 		use_card()
 	
 	if Input.is_action_just_pressed("reload") and not is_reloading:
@@ -188,6 +195,7 @@ func _process(delta):
 func _ready() -> void:
 	update_dash_ui() 
 	add_to_group("player_body")
+	$HurtArea.add_to_group("player_hurtbox")
 	sleight_manager.connect("sleight_triggered", Callable(self, "_on_sleight_triggered"))
 	graze_zone.connect("area_entered", Callable(self, "_on_graze_area_entered"))
 	graze_zone.connect("area_exited", Callable(self, "_on_graze_area_exited"))
@@ -219,8 +227,6 @@ func start_reload():
 
 	var deck_ratio = float(current_deck_size) / float(card_system.deck_data.size())
 	reload_duration = lerp(base_reload_time, max_reload_time, deck_ratio)
-
-	#print("🔄 Starting reload... duration: ", reload_duration, "s")
 	is_reloading = true
 	reload_bar.value = 0
 	reload_bar.visible = true
@@ -289,13 +295,12 @@ func store_card_for_sleight():
 	card_system.draw_card()
 	
 func _on_sleight_triggered(card_names: Array):
-	print("💥 Sleight attack: ", card_names)
 	var combo = card_names.duplicate()
 	combo.sort()
 
 	#Check sleight combinations
 	if combo == ["spread 3", "spread 3", "spread 3"].map(func(n): return n.to_lower()):
-		fire_super_spread_burst(0, 0.5, 6, preload("res://card_sleights/sleight_combo1.tres"))
+		fire_super_spread_burst(0, 0, 1, preload("res://card_sleights/sleight_combo1.tres"))
 	
 	if combo == ["spread 5", "spread 5", "spread 5"].map(func(n): return n.to_lower()):
 		fire_super_spread_burst(1, 0.2, 8, preload("res://card_sleights/super_spread_big.tres"))
@@ -320,7 +325,7 @@ func fire_spirit_bomb(recipe: SleightRecipe):
 
 
 func fire_burst_barrage(recipe: SleightRecipe):
-	var barrage_duration = 2.0  
+	var barrage_duration = 1.5  
 	var fire_interval = 0.1     
 	var end_time = Time.get_ticks_msec() / 1000.0 + barrage_duration
 	var offset = 15

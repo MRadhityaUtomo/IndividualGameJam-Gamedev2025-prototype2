@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cjft6apyheew0"]
 
-[ext_resource type="Script" path="res://dash_trail.gd" id="1_bi33u"]
+[ext_resource type="Script" uid="uid://blrye4knk37pd" path="res://dash_trail.gd" id="1_bi33u"]
 [ext_resource type="Texture2D" uid="uid://cxwx7n8bepy65" path="res://myassets/player_dashtrail-sheet.png" id="2_t0of0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lm5ju"]

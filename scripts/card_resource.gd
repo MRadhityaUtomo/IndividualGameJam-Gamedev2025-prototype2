@@ -14,7 +14,7 @@ class_name CardResource
 @export var start_delay: float = 0.0
 
 # Pattern type (used by PatternManager)
-@export_enum("SPREAD", "BURST", "SPIRAL", "FAN", "RING", "SPIN", "ALTERNATE_RING", "FLOWER", "CROSS_SPIN","CONVERGE")
+@export_enum("SPREAD", "BURST", "SPIRAL", "FAN", "RING", "SPIN", "ALTERNATE_RING", "FLOWER", "CROSS_SPIN","CONVERGE","DASHBURST")
 var pattern_type: String
 
 @export var lock_tags: Array[String] = []

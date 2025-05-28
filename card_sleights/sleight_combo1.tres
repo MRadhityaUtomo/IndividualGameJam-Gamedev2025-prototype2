@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SleightRecipe" load_steps=3 format=3 uid="uid://b56y3vhgvog82"]
 
-[ext_resource type="Script" path="res://scripts/sleight_resource.gd" id="1_adntf"]
+[ext_resource type="Script" uid="uid://wfnyjbvqkw6y" path="res://scripts/sleight_resource.gd" id="1_adntf"]
 [ext_resource type="PackedScene" uid="uid://8t1wt7yc2e30" path="res://scenes/player_bullet.tscn" id="1_wj04f"]
 
 [resource]
@@ -9,9 +9,9 @@ card_names = Array[String](["spread 3", "spread 3", "spread 3"])
 name = "super spread small"
 mana_cost = 40
 bullet_scene = ExtResource("1_wj04f")
-bullet_speed = 600.0
-bullet_count = 3
-spread_angle = 20.0
+bullet_speed = 500.0
+bullet_count = 30
+spread_angle = 120.0
 fire_delay = 0.05
 is_burst = false
-bullet_damage = 8
+bullet_damage = 5

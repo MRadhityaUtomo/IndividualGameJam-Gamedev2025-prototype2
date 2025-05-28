@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://iieo8xurielr" path="res://myassets/title.png" id="1_ijq8w"]
 [ext_resource type="PackedScene" uid="uid://cvcs37m2ias6s" path="res://scenes/post_processing.tscn" id="1_mw0ag"]
-[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_xcecy"]
+[ext_resource type="Script" uid="uid://bck85sgt7vk40" path="res://scenes/main_menu.gd" id="1_xcecy"]
 [ext_resource type="Texture2D" uid="uid://c3nyqgpsyjgn8" path="res://myassets/Static_screen_TV.png" id="2_p2nij"]
 [ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="3_b7h3s"]
 [ext_resource type="PackedScene" uid="uid://byc1ytls06ja6" path="res://scenes/loading_screen.tscn" id="4_0q2gt"]

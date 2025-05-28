@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://b7kl4g8xl8ecu"]
 
-[ext_resource type="Script" path="res://enemy_bullet.gd" id="1_nc4q8"]
+[ext_resource type="Script" uid="uid://75smnm2jd1e3" path="res://enemy_bullet.gd" id="1_nc4q8"]
 [ext_resource type="Texture2D" uid="uid://dwtnu4dtc2gvt" path="res://myassets/enemybullet.png" id="2_hmpb1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x31ur"]
 
 [node name="EnemyBullet" type="Area2D"]
-light_mask = 3
+light_mask = 7
 visibility_layer = 4
 z_index = -1
 scale = Vector2(2, 2)
@@ -20,4 +20,5 @@ texture = ExtResource("2_hmpb1")
 scale = Vector2(1.45811, 1.45811)
 shape = SubResource("CircleShape2D_x31ur")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

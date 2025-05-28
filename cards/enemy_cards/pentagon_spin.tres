@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardResource" load_steps=3 format=3 uid="uid://bvlrhww0eypnk"]
 
 [ext_resource type="PackedScene" uid="uid://b7kl4g8xl8ecu" path="res://enemy_bullet.tscn" id="1_q2ivo"]
-[ext_resource type="Script" path="res://scripts/card_resource.gd" id="2_khq2a"]
+[ext_resource type="Script" uid="uid://ba1wxnqstl0pf" path="res://scripts/card_resource.gd" id="2_khq2a"]
 
 [resource]
 script = ExtResource("2_khq2a")
@@ -20,6 +20,6 @@ lock_tags = Array[String](["heavy"])
 per_arm_dist = 100.0
 cross_spin_distance = 10.0
 cross_spin_duration = 10.0
-cross_spin_speed = 24.0
+cross_spin_speed = 25.0
 convergence_delay = 0.0
 converge_radius = 0.0

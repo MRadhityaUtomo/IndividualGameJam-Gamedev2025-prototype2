@@ -1,7 +1,7 @@
-[gd_scene load_steps=42 format=3 uid="uid://c13aa21wcmhhd"]
+[gd_scene load_steps=46 format=3 uid="uid://c13aa21wcmhhd"]
 
 [ext_resource type="PackedScene" uid="uid://c2w466ns4cw4q" path="res://scenes/player.tscn" id="1_sa077"]
-[ext_resource type="Script" path="res://scenes/test_scene.gd" id="1_vu6yx"]
+[ext_resource type="Script" uid="uid://6b8fdx2k87ur" path="res://scenes/test_scene.gd" id="1_vu6yx"]
 [ext_resource type="PackedScene" uid="uid://c5wesrx24kb1o" path="res://scenes/UI/card_slot_root.tscn" id="2_wkljl"]
 [ext_resource type="PackedScene" uid="uid://4n8ty1pm02d6" path="res://scenes/boss_enemy.tscn" id="4_6ap1x"]
 [ext_resource type="PackedScene" uid="uid://nsurbe3tvpsc" path="res://scenes/UI/sleight_slots_ui.tscn" id="4_df2qh"]
@@ -10,17 +10,18 @@
 [ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="7_1yp7l"]
 [ext_resource type="Texture2D" uid="uid://cs8ivkgdyvkt2" path="res://myassets/battleframe3.png" id="7_e8qo7"]
 [ext_resource type="PackedScene" uid="uid://df8hlmmgf2h1n" path="res://scenes/UI/player_stats_ui.tscn" id="7_oo5ia"]
-[ext_resource type="Script" path="res://scenes/camera_2d.gd" id="9_7o710"]
-[ext_resource type="Script" path="res://scenes/enemy_hp_bar.gd" id="10_nq81a"]
-[ext_resource type="Script" path="res://scenes/player_hp_bar.gd" id="12_2r3mk"]
+[ext_resource type="Script" uid="uid://cayef6rtp6lfv" path="res://scenes/camera_2d.gd" id="9_7o710"]
+[ext_resource type="Script" uid="uid://bp4wh0pfdyun1" path="res://scenes/enemy_hp_bar.gd" id="10_nq81a"]
+[ext_resource type="Script" uid="uid://32wya25wsalf" path="res://scenes/player_hp_bar.gd" id="12_2r3mk"]
 [ext_resource type="PackedScene" uid="uid://cvcs37m2ias6s" path="res://scenes/post_processing.tscn" id="12_dwrm0"]
 [ext_resource type="Texture2D" uid="uid://c3nyqgpsyjgn8" path="res://myassets/Static_screen_TV.png" id="12_pdbst"]
 [ext_resource type="PackedScene" uid="uid://byc1ytls06ja6" path="res://scenes/loading_screen.tscn" id="12_rea6j"]
 [ext_resource type="AudioStream" uid="uid://dx3t2qxq3cla2" path="res://myassets/audio/tape-player-sounds-90780.wav" id="16_4liep"]
-[ext_resource type="AudioStream" uid="uid://be6766o48ygbf" path="res://myassets/audio/stg_st008/unityloop/stg_st008-intro.ogg" id="18_uhn0l"]
-[ext_resource type="AudioStream" uid="uid://dti7itva3ycaf" path="res://myassets/audio/stg_st008/unityloop/stg_st008-loop.ogg" id="19_0e6nm"]
+[ext_resource type="AudioStream" uid="uid://be6766o48ygbf" path="res://myassets/audio/stg_st008/unityloop/stg_st008-intro.ogg" id="18_6gkjt"]
+[ext_resource type="AudioStream" uid="uid://dti7itva3ycaf" path="res://myassets/audio/stg_st008/unityloop/stg_st008-loop.ogg" id="19_lmrlb"]
 [ext_resource type="AudioStream" uid="uid://dy82n6fjv6y8r" path="res://myassets/audio/hurt.wav" id="19_lw08v"]
 [ext_resource type="Texture2D" uid="uid://cdhodwn2aax7x" path="res://myassets/warning.png" id="21_nra47"]
+[ext_resource type="Texture2D" uid="uid://cdl7rmi3iermx" path="res://myassets/targetsights.png" id="22_e6m7g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rgwvb"]
 atlas = ExtResource("7_e8qo7")
@@ -141,6 +142,28 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4x6b"]
+atlas = ExtResource("22_e6m7g")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjuxo"]
+atlas = ExtResource("22_e6m7g")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ng4qn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4x6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjuxo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_vu6yx")
 
@@ -156,6 +179,10 @@ position = Vector2(1070, 894)
 
 [node name="BossEnemy" parent="." instance=ExtResource("4_6ap1x")]
 position = Vector2(960, 318)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("9_7o710")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -307,10 +334,6 @@ text = "PRESS [ENTER] TO RESTART"
 
 [node name="PostProcessing" parent="." instance=ExtResource("12_dwrm0")]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-script = ExtResource("9_7o710")
-
 [node name="Switch" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_4liep")
 volume_db = 10.0
@@ -320,13 +343,15 @@ pitch_scale = 1.2
 
 [node name="BGMStart" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(960, 540)
-stream = ExtResource("18_uhn0l")
-volume_db = -2.0
+stream = ExtResource("18_6gkjt")
+volume_db = -9.0
+pitch_scale = 1.2
 
 [node name="BGMLoop" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(960, 540)
-stream = ExtResource("19_0e6nm")
-volume_db = -1.0
+stream = ExtResource("19_lmrlb")
+volume_db = -9.0
+pitch_scale = 1.2
 
 [node name="FinalHit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("19_lw08v")
@@ -334,8 +359,17 @@ volume_db = 15.0
 pitch_scale = 0.2
 
 [node name="Warning" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(971, 318)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_e518x")
+
+[node name="Target" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(768, 678)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_ng4qn")
+autoplay = "default"
+frame_progress = 0.0422334
 
 [connection signal="timeout" from="CanvasLayer/SpeedTimer/BlinkTimer" to="." method="_on_BlinkTimer_timeout"]

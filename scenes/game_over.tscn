@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://u2e74ykjrolk"]
 
-[ext_resource type="Script" path="res://scenes/game_over.gd" id="1_k81x2"]
+[ext_resource type="Script" uid="uid://begufsxm3qbdw" path="res://scenes/game_over.gd" id="1_k81x2"]
 [ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="2_51vjv"]
 [ext_resource type="Texture2D" uid="uid://c3nyqgpsyjgn8" path="res://myassets/Static_screen_TV.png" id="2_mm26h"]
 [ext_resource type="PackedScene" uid="uid://cvcs37m2ias6s" path="res://scenes/post_processing.tscn" id="3_j2cvl"]

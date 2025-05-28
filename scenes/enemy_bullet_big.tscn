@@ -1,11 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://ddbxivj70e147"]
 
 [ext_resource type="Texture2D" uid="uid://dky0bwdb2lebc" path="res://myassets/enemybulletbig.png" id="1_omee8"]
-[ext_resource type="Script" path="res://enemy_bullet.gd" id="1_pysok"]
+[ext_resource type="Script" uid="uid://75smnm2jd1e3" path="res://enemy_bullet.gd" id="1_pysok"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xyr36"]
 
 [node name="EnemyBulletBig" type="Area2D"]
+light_mask = 7
+visibility_layer = 4
 scale = Vector2(8, 8)
 script = ExtResource("1_pysok")
 
@@ -13,7 +15,10 @@ script = ExtResource("1_pysok")
 texture = ExtResource("1_omee8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 7
+visibility_layer = 4
 scale = Vector2(0.834048, 0.834048)
 shape = SubResource("CircleShape2D_xyr36")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

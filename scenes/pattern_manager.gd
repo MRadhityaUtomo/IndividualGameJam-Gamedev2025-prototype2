@@ -31,7 +31,7 @@ func start_patterns():
 
 func start_next_pattern():
 	print(queued_patterns)
-	# Try to run queued pattern first
+	# Try to run queued pattern
 	for i in queued_patterns.size():
 		var queued_card = queued_patterns[i]
 		if can_run_pattern(queued_card.lock_tags):
@@ -61,7 +61,7 @@ func start_next_pattern():
 
 	await run_card_pattern(card)
 
-
+signal target_attacks
 func run_card_pattern(card: CardResource) -> void:
 	used_cards += 1
 	print("PatternManager: Used %s cards" % used_cards)
@@ -70,16 +70,24 @@ func run_card_pattern(card: CardResource) -> void:
 	#if card.pattern_type == "BURST":
 		#_show_burst_preview(card)
 	
-	if card.pattern_type == "BURST" or card.pattern_type == "CROSS_SPIN":
+	if card.card_name == "cannon" or card.pattern_type == "CROSS_SPIN" or card.pattern_type == "DASHBURST":
+		$"../../Warning".position = Boss.global_position
 		$"../../Warning".visible = true
 		$"../../Warning".play()
+		
+	if card.card_name == "dashnburst":
+		emit_signal("target_attacks")
+		$"../../Target".visible = true
+		$"../../Target".play()
+		$"../Sprites/Sprite2D".speed_scale = 3
+		$"../Sprites/Thrusters".speed_scale = 3
 
 	await get_tree().create_timer(card.start_delay).timeout
-
-	#_hide_burst_preview()  
-	add_locks(card.lock_tags)
+	
 	$"../../Warning".visible = false
 	$"../../Warning".stop()
+	#_hide_burst_preview()  
+	add_locks(card.lock_tags)
 	match card.pattern_type:
 		"BURST":
 			await fire_burst_pattern(card)
@@ -95,11 +103,15 @@ func run_card_pattern(card: CardResource) -> void:
 			await fire_cross_spin_pattern(card)
 		"SPREAD":
 			await fire_spread_pattern(card)
+		"DASHBURST":
+			await fire_dashspiral_pattern(card)
 		#"CONVERGE":
 			#await fire_converge_circle_pattern(card)
 		_:
 			print("PatternManager: Unknown pattern type -", card.pattern_type)
 
+	$"../../Target".visible = false
+	$"../../Target".stop()
 	remove_locks(card.lock_tags)
 
 ## Attack limit 
@@ -243,27 +255,8 @@ func fire_cross_spin_pattern(card: CardResource) -> void:
 	group.queue_free()
 
 
-
-
-
-
-
-
 func fire_spiral_pattern(card):
-	#var original_speed = Boss.speed
-	#var dash_speed = 900
-	#var dash_duration = 0.4
-	#Boss.speed = 10
-	#await get_tree().create_timer(0.5).timeout
-	## Move quickly toward player
-	#Boss.speed = dash_speed
-	#await get_tree().create_timer(dash_duration).timeout
-
-	# Stop movement briefly before firing
-	#Boss.speed = 0
-	#await get_tree().create_timer(0.5).timeout  # Pause before firing (optional, adds tension)
-
-	# Fire bullets in all directions
+	await get_tree().create_timer(card.start_delay).timeout
 	var count = card.bullet_count
 	for i in range(count):
 		var bullet = card.bullet_scene.instantiate()
@@ -274,10 +267,103 @@ func fire_spiral_pattern(card):
 		bullet.speed = card.bullet_speed
 		bullet.damage = card.bullet_damage
 		get_tree().current_scene.add_child(bullet)
-	## Resume normal movement
-	#await get_tree().create_timer(1.4).timeout 
-	#Boss.speed = original_speed
 
+### UAS ASSIGNMENT ###
+#### MAKE THE BOSS MOVE. THE BOSS WILL MOVE TO THE TARGET DIRECTION OF THE CURRENT PLAYER POSITION BEFORE FIRING (IN THIS CASE I USED THE SPIRAL PATTERN BECAUSE IT'S INSTANT AND SIMPLE)
+signal spiral
+func fire_dashspiral_pattern(card):
+	# GET THE PLAYER POSITION
+	Boss.target_direction = Boss.player.global_position
+	Boss.spiral = true
+	emit_signal("spiral") # SPAWN INDICATOR ON MAIN SCENE
+	$"../../Target".visible = false
+	$"../../Target".stop()
+	var dash_speed = 700.0
+	var arrival_threshold = 4.0 
+
+	# DASH
+	while Boss.global_position.distance_to(Boss.target_direction) > arrival_threshold:
+		var dir = (Boss.target_direction - Boss.global_position).normalized()
+		Boss.velocity = dir * dash_speed
+		Boss.move_and_slide()
+		if Boss.cam and Boss.cam.has_method("shake"):
+			Boss.cam.shake(0.2) 
+		await get_tree().create_timer(0.001).timeout
+	
+	$"../Sprites/Sprite2D".speed_scale = 1
+	$"../Sprites/Thrusters".speed_scale = 1
+	var count = card.bullet_count
+	$"../smash".play()
+	$"../smash2".play()
+	
+	# SHOOT SPIRAL PATTERN FROM NEW POSITION 
+	for i in range(count):
+		var bullet = card.bullet_scene.instantiate()
+		bullet.boss = Boss 
+		var angle = i * (360 / count)
+		bullet.global_position = $"../CenterSpawnPoint".global_position
+		bullet.global_rotation = deg_to_rad(angle)
+		bullet.speed = card.bullet_speed
+		bullet.damage = card.bullet_damage
+		get_tree().current_scene.add_child(bullet)
+	Boss.velocity = Vector2.ZERO
+	Boss.spiral = false
+
+#signal spiral
+#func fire_dashspiral_pattern(card):
+	#Boss.target_direction = Boss.player.global_position
+	#Boss.tracking_enabled = false
+	#Boss.spiral = true
+	#emit_signal("spiral")
+	#$"../../Target".visible = false
+	#$"../../Target".stop()
+	#var dash_speed = 700.0
+	#var arrival_threshold = 4.0  # Distance where we stop the dash
+#
+	#while Boss.global_position.distance_to(Boss.target_direction) > arrival_threshold:
+		#var dir = (Boss.target_direction - Boss.global_position).normalized()
+		#Boss.velocity = dir * dash_speed
+		#Boss.move_and_slide()
+		#await get_tree().create_timer(0.01).timeout
+#
+	## Snap to exact target pos if needed (optional)
+	## Boss.global_position = Boss.target_direction
+	#$"../Sprites/Sprite2D".speed_scale = 1
+	#$"../Sprites/Thrusters".speed_scale = 1
+	#Boss.velocity = Vector2.ZERO
+	#Boss.tracking_enabled = true
+	#Boss.spiral = false
+#
+	#var count = card.bullet_count
+	#for i in range(count):
+		#var bullet = card.bullet_scene.instantiate()
+		#bullet.boss = Boss 
+		#var angle = i * (360 / count)
+		#bullet.global_position = Boss.shoot_point.global_position
+		#bullet.global_rotation = deg_to_rad(angle)
+		#bullet.speed = card.bullet_speed
+		#bullet.damage = card.bullet_damage
+		#get_tree().current_scene.add_child(bullet)
+
+
+
+#signal spiral
+#func fire_spiral_pattern(card):
+	#Boss.target_direction = Boss.player.global_position
+	#emit_signal("spiral")
+	#await get_tree().create_timer(1).timeout
+	#var count = card.bullet_count
+	#for i in range(count):
+		#var bullet = card.bullet_scene.instantiate()
+		#bullet.boss = Boss 
+		#var angle = i * (360 / count)
+		#bullet.global_position = shoot_point.global_position
+		#bullet.global_rotation = deg_to_rad(angle)
+		#bullet.speed = card.bullet_speed
+		#bullet.damage = card.bullet_damage
+		#get_tree().current_scene.add_child(bullet)
+	#Boss.spiral = false
+	
 func fire_alternate_ring_pattern(card):
 	var total_waves: int = 10  # Number of alternating waves
 	var count: int = card.bullet_count
@@ -299,7 +385,7 @@ func fire_alternate_ring_pattern(card):
 		await get_tree().create_timer(card.fire_delay).timeout
 
 func fire_flower_pattern(card):
-	var waves: int = 15
+	var waves: int = 20
 	var count: int = card.bullet_count
 	var angle_step: float = 360.0 / float(count)
 	var rotation_offset: float = 0.0 

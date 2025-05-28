@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c5wesrx24kb1o"]
 
-[ext_resource type="Script" path="res://scenes/UI/card_slot_root.gd" id="1_5km5y"]
+[ext_resource type="Script" uid="uid://qp2jbtxjjmku" path="res://scenes/UI/card_slot_root.gd" id="1_5km5y"]
 [ext_resource type="FontFile" uid="uid://drmkd67fxsisc" path="res://myassets/Minecraft.ttf" id="3_gdddj"]
 [ext_resource type="AudioStream" uid="uid://bi00aka1eqpum" path="res://myassets/audio/flipcard-91468.wav" id="4_ukdfp"]
 

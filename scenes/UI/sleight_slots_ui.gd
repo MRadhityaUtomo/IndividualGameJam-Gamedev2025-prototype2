@@ -70,7 +70,6 @@ func _on_sleight_updated(buffer: Array):
 			idle_sway_tweens[i] = idle_tween
 
 		else:
-			# 🔧 Make sure to reset empty slot visuals
 			slot.texture = load("res://myassets/card_base-export.png")
 			label.text = "[X] EMPTY"
 			slot.rotation_degrees = 0
@@ -86,11 +85,9 @@ func _on_sleight_used(buffer: Array):
 		var slot = slots[i]
 		slot.texture = load("res://myassets/card_base-export.png")
 
-		# Kill any idle sway tween
 		if idle_sway_tweens.has(i):
 			idle_sway_tweens[i].kill()
 			idle_sway_tweens.erase(i)
 
-		# Reset rotation just in case
 		slot.rotation_degrees = 0
 		

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CardResource" load_steps=2 format=3 uid="uid://7rtfgyhjljpw"]
+
+[ext_resource type="Script" path="res://scripts/card_resource.gd" id="1_nglhi"]
+
+[resource]
+script = ExtResource("1_nglhi")
+card_name = ""
+bullet_speed = 0.0
+bullet_count = 0
+spread_angle = 0.0
+fire_delay = 0.0
+is_burst = false
+mana_cost = 0
+bullet_damage = 0
+start_delay = 0.0
+pattern_type = ""
+lock_tags = Array[String]([])
+per_arm_dist = 100.0
+cross_spin_distance = 64.0
+cross_spin_duration = 5.0
+cross_spin_speed = 90.0
+convergence_delay = 0.0
+converge_radius = 0.0

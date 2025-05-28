@@ -44,7 +44,15 @@ func _ready():
 	card_manager.card_drawn.connect(card_slot.show_card)
 	card_slot.show_card(card_manager.current_card)
 	boss.connect("boss_died", self._on_boss_defeated)
+	BossPatternManager.connect("target_attacks", self._on_boss_target_attack)
 	player.connect("player_died", self._on_player_died)
+	
+func _on_boss_target_attack():
+	pass
+	#$Target.visible = true
+	#$Target.play()
+	
+	
 	
 	
 func _on_BGMSstart_finished():
@@ -87,6 +95,7 @@ func _on_player_died():
 
 
 func _process(delta):
+	$Target.global_position = player.global_position
 	if player:
 		mana_label.text = "MANA: [ %.2f / %.2f ]" % [player.mana, player.max_mana]
 		mana_bar.max_value = player.max_mana
@@ -124,6 +133,9 @@ func _process(delta):
 
 		Engine.time_scale = 1.0  
 		get_tree().reload_current_scene()
+	if !boss:
+		$Warning.visible = false
+		$Target.visible = false
 		
 
 
@@ -132,6 +144,7 @@ func start_boss_timer():
 	boss_fight_time = 0.0
 
 func _on_boss_defeated():
+	player.is_invincible = true
 	$Warning.stop()
 	$Warning.visible = false
 	$FinalHit.play()
@@ -144,6 +157,7 @@ func _on_boss_defeated():
 			fade.set_ease(Tween.EASE_OUT)
 
 	stop_boss_timer()
+	$Warning.visible = false
 
 
 func stop_boss_timer():
@@ -166,4 +180,4 @@ func update_timer_label():
 	var milliseconds = total_ms % 100
 
 	var time_string = "%02d : %02d : %02d" % [minutes, seconds, milliseconds]
-	SpeedTimer.text = time_string  # adjust path if needed
+	SpeedTimer.text = time_string 
